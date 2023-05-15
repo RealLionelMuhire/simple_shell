@@ -46,3 +46,55 @@ int _sprintf(char *str, const char *format, ...)
 		str[j] = '\0'; /* null-terminate the string */
 		return (j);
 }
+
+/**
+ * check_env - checks if the typed variable is the environment var
+ *
+ * @h: head point in invironment list
+ * @str: is the string passed
+ * @data: shell data struct
+ */
+
+void check_env(l_v **h, char *str, sh_dt *data)
+{
+	char *env_name;
+	int len, i;
+
+	env_name = _strtok(str + 1, " \t\n;");
+	if (!env_name)
+		return;
+
+	len = _strlen(env_name);
+	for (i = 0; data->env[i]; i++)
+	{
+		if (_strncmp(data->env[i], env_name, len) == 0 &&
+				data->env[i][len] == '=')
+		{
+			add_lv_n(h, len, data->env[i] + len + 1,
+					_strlen(data->env[i] + len + 1));
+
+			return;
+		}
+	}
+	add_lv_n(h, len, NULL, 0);
+}
+
+/**
+ */
+
+int dollar_sign(l_v **h, char *str, char stat, sh_dt data)
+{
+	int i, j, k;
+
+	j = _strlen(str);
+	k = _strlen(data->pid);
+
+	for (i = 0; str[i]; i++)
+	{
+		if (str[i] == '$')
+		{
+			if (str[i + 1] == '?')
+				add_lv_n(h, 2, stat, j), i++;
+		}
+	}
+}

@@ -90,7 +90,7 @@ typedef struct list_var
 	int var_len;
 	int val_len;
 	struct list_var *next
-} l_var;
+} l_v;
 
 /**
  * struct list_separators - struct node of list separators
@@ -112,6 +112,7 @@ typedef struct list_separators
 char *_memset(char *s, char b, unsigned int n);
 char *_memcpy(char *dest, char *src, unsigned int n);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void free_lv(l_v **head);
 
 /*string managements prototypes*/
 int _strlen(char *s);
@@ -145,5 +146,7 @@ int _intlen(int num);
 char *_itoa(unsigned int n);
 void arr_rev(char *arr, int len);
 
+/*add node*/
+l_v *add_lv_n(lv **head, int lvr, int *v, int lvl);
 
 #endif

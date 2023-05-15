@@ -101,3 +101,25 @@ int free_d(sh_dt *data)
 
 	return (0);
 }
+
+/**
+ * free_lv - frees linked list of variables
+ * @head: head node;
+ */
+
+void free_lv(l_v **head)
+{
+	l_v *tmp;
+	l_v *current;
+
+	if (!head)
+	{
+		current = *head;
+		while ((tmp = crrent))
+		{
+			current = current->next;
+			free(tmp);
+		}
+		*head = NULL;
+	}
+}
