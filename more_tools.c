@@ -121,3 +121,88 @@ int dollar_sign_h(l_v **h, char *str, char stat, sh_dt data)
 	}
 	return (i);
 }
+
+/**
+ * str_replace - it takes str and replaced them with variables
+ * @head: head of ll
+ * @s: input str
+ * @n_s:new string
+ * @n_l: new length
+ *
+ * Return: replaced str
+ */
+char *str_replace(l_v **head, char *s, char *n_s, n_l)
+{
+	l_v current = *head;
+	int i, j, k;
+
+	for (i = j = 0; i < n_l; i++, j++)
+	{
+		if (s[j] == '$')
+		{
+			if (current && current->val_len > 0)
+			{
+				for (k = 0; k < current->val_len; k++)
+				{
+					n_s[i] = current->var_val[k];
+					i++;
+				}
+				j += current->var_len - 1;
+				current = current->next;
+			}
+			else
+			{
+				n_s[i] = s[j];
+			}
+		}
+		else
+		{
+			n_s[i] = s[j];
+		}
+	}
+	return (n_s);
+}
+
+/**
+ * replace_v - replace variables in the input string with
+ * their corresponding values
+ * @str: input string to be replaced
+ * @data: struct containing all shell data
+ *
+ * Return: the string that was replaced
+ */
+char *replace_v(char *str, sh_dt *data)
+{
+	l_v *head = NULL, *idx;
+	char *state = _itoa(data->status), *n_str;
+	int new_len = 0;
+
+	dollar_sign_h(&head, str, state, data);
+
+	if (!head)
+	{
+		free(state);
+		return (str);
+	}
+
+	idx = head;
+
+	while (idx)
+	{
+		new_len += idx->val_len - idx->var_len;
+		idx = idx->next;
+	}
+
+	new_len += _strlen(str);
+
+	n_str = malloc(new_len + 1);
+	n_str[new_len] = '\0';
+
+	str_replace(head, str, n_str, new_len);
+
+	free(str);
+	free(state);
+	free_lv(&head);
+
+	return (n_str);
+}
