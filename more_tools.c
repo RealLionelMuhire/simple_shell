@@ -80,9 +80,17 @@ void check_env(l_v **h, char *str, sh_dt *data)
 }
 
 /**
+ * dollar_sign_h - check for $$ or $?
+ *
+ * @h: head of linked list
+ * @str: is the input string
+ * @stat: shell status
+ * @data: shell data struct
+ * Return: the number of chars checked in str
+ * -------- and allows the user to continue processing the rest
  */
 
-int dollar_sign(l_v **h, char *str, char stat, sh_dt data)
+int dollar_sign_h(l_v **h, char *str, char stat, sh_dt data)
 {
 	int i, j, k;
 
@@ -93,8 +101,23 @@ int dollar_sign(l_v **h, char *str, char stat, sh_dt data)
 	{
 		if (str[i] == '$')
 		{
-			if (str[i + 1] == '?')
-				add_lv_n(h, 2, stat, j), i++;
+			if (str[i + 1] == '?' || str[i + 1] == '$')
+			{
+				add_lv_n(h, 2, str[i + 1] == '?' ? stat : data->pid,
+						str[i + 1] == '?' ? j : k);
+				i++;
+			}
+			else if (str[i + 1] && str[i + 1] != '\n' && str[i + 1]
+					!= '\0' && str[i + 1] != ' ' && str[i + 1] != '\t' && str[i + 1] != ';')
+			{
+				check_env(h, str + i, data);
+				i++;
+			}
+			else
+			{
+				add_lv_n(h, 0, NULL, 0);
+			}
 		}
 	}
+	return (i);
 }
