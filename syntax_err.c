@@ -116,8 +116,7 @@ void synt_err_print(sh_dt *data, char *str, int i, int bool)
 		free(count);
 		return;
 	}
-	_snprintf(err, len, "%s: %s%s%s%s", data->av[0],
-		count, msg2, msg, msg3);
+	_sprintf(err, "%s: %s%s%s%s", data->av[0], count, msg2, msg, msg3);
 	write(STDERR_FILENO, err, len - 1);
 	free(err);
 	free(count);
