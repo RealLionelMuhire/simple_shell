@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <errno.h>
-#include <fnctl.h>
+#include <fcntl.h>
 #include <stdarg.h>
 #include <stdarg.h>
 
