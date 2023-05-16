@@ -113,6 +113,8 @@ char *_memset(char *s, char b, unsigned int n);
 char *_memcpy(char *dest, char *src, unsigned int n);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_lv(l_v **head);
+void free_l_sep(l_sep **h);
+void free_cmd_st(cmd_st **h);
 
 /*string managements prototypes*/
 int _strlen(char *s);
