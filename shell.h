@@ -121,6 +121,7 @@ int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 char *_strcat(char *dest, char *src);
 int _strncmp(const char *s1, const char *s2, size_t n);
+char *_strtok(char *str, const char *delim);
 int _atoi(char *s);
 int _isdigit(int c);
 
