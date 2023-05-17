@@ -62,14 +62,14 @@ typedef struct builtin
 } blt_cmd;
 
 /**
- * struct command_strore - single linked list for storage
+ * struct command_store - single linked list for storage
  * @c_line: command line entered
  * @next: next node
  *
  * Description: this linked list aimed to store command line
  */
 
-typedef struct command_strore
+typedef struct command_store
 {
 	char *c_line;
 	struct command_store *next;
@@ -102,7 +102,7 @@ typedef struct list_separators
 {
 	char sep;
 	struct list_separators *next;
-} list_sep;
+} l_sep;
 
 
 
@@ -113,6 +113,8 @@ char *_memset(char *s, char b, unsigned int n);
 char *_memcpy(char *dest, char *src, unsigned int n);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_lv(l_v **head);
+void free_l_sep(l_sep **h);
+void free_cmd_st(cmd_st **h);
 
 /*string managements prototypes*/
 int _strlen(char *s);
@@ -149,5 +151,10 @@ void arr_rev(char *arr, int len);
 
 /*add node*/
 l_v *add_lv_n(lv **head, int lvr, int *v, int lvl);
+l_sep *add_l_sep_n(l_sep **head, char s);
+cmd_st *add_cmd_st_n(cmd_st **h, char *cmd);
+void add_sep_cmd_n(l_sep **h_s, cmd_st **h_c, char *str);
 
+/*tok_cmd*/
+char *ch_repl(char *str, int bool);
 #endif
