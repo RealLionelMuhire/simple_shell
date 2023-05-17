@@ -21,6 +21,7 @@ extern char **environ;
 /*macros*/
 #define BUFSIZE 1024
 #define PRINT(c) (write(STDIN_FILENO, c, _strlen(c)))
+#define PRINT_ERR(c) (write(STDERR_FILENO, c, _strlen(c)))
 #define DELIMITER " \a\n\t\r"
 #define TOK_SIZE 64
 
@@ -115,6 +116,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_lv(l_v **head);
 void free_l_sep(l_sep **h);
 void free_cmd_st(cmd_st **h);
+void *_dp_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 /*string managements prototypes*/
 int _strlen(char *s);

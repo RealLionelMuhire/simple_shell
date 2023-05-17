@@ -117,7 +117,7 @@ void synt_err_print(sh_dt *data, char *str, int i, int bool)
 		return;
 	}
 	_sprintf(err, "%s: %s%s%s%s", data->av[0], count, msg2, msg, msg3);
-	write(STDERR_FILENO, err, len - 1);
+	PRINT_ERR(err);
 	free(err);
 	free(count);
 }
@@ -169,7 +169,8 @@ int err_synt_checker(sh_dt *data, char *str)
 	}
 
 	i = get_err_sep(str + init, 0, *(str + init));
-	if (i)int idx_char(char *str, int *idx)
+
+	if (i)
 	{
 		synt_err_print(data, str, init + 1, 1);
 		return (1);
