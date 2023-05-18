@@ -9,11 +9,11 @@
  */
 char *_strtok(char *str, const char *delim)
 {
-	static char *last = NULL;
+	static char *last = "";
 	char *token, *ptr;
 
-	if(str == NULL && last == NULL)
-		return(NULL);
+	if (str == NULL && last == NULL)
+		return (NULL);
 
 	if (str != NULL)
 		ptr = str;
@@ -23,13 +23,13 @@ char *_strtok(char *str, const char *delim)
 	while (*ptr && _strchr(delim, *ptr))
 		ptr++;
 	if (*ptr == '\0')
-		return(NULL);
+		return (NULL);
 
 	token = ptr;
 	while (*ptr && _strchr(delim, *ptr))
 		ptr++;
 	if (*ptr == '\0')
-		last = NULL;
+		last = "";
 	else
 	{
 		*ptr = '\0';
