@@ -14,6 +14,7 @@
 #include <fcntl.h>
 #include <stdarg.h>
 #include <stdarg.h>
+#include <sys/stat.h>
 
 /*global variables to environment*/
 extern char **environ;
@@ -150,6 +151,7 @@ int _sprintf(char *str, const char *format, ...);
 int _intlen(int num);
 char *_itoa(unsigned int n);
 void arr_rev(char *arr, int len);
+char *replace_v(char *str, sh_dt *data);
 
 /*add node*/
 l_v *add_lv_n(lv **head, int lvr, int *v, int lvl);
@@ -159,4 +161,8 @@ void add_sep_cmd_n(l_sep **h_s, cmd_st **h_c, char *str);
 
 /*tok_cmd*/
 char *ch_repl(char *str, int bool);
+int cmd_tok(sh_dt *data, char *str);
+
+/*executer*/
+int exec_cmd(sh_dt *data);
 #endif

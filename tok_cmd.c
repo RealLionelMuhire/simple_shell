@@ -61,7 +61,7 @@ void next_cmd(l_sep **s_ls, cmd_st **cmd, sh_dt *data)
 	cmd_st *c = *cmd;
 	int n = 1;
 
-	while(l && n)
+	while (l && n)
 	{
 		if (data->status == 0)
 		{
@@ -72,7 +72,7 @@ void next_cmd(l_sep **s_ls, cmd_st **cmd, sh_dt *data)
 		}
 		else
 		{
-			if (l->sep == '|' || l->sep ==';')
+			if (l->sep == '|' || l->sep == ';')
 				n = 0;
 			else if (l->sep == '&')
 				c = c->next;
@@ -108,9 +108,9 @@ char **tok_line(char *str)
 	{
 		toks[i++] = tok;
 
-		if (i = size)
+		if (i == size)
 		{
-			size += TOK_SIZE 
+			size += TOK_SIZE;
 			toks = _dp_realloc(toks, i, sizeof(char *) * size);
 
 			if (toks)
@@ -125,6 +125,11 @@ char **tok_line(char *str)
 }
 
 /**
+ * cmd_tok - tokenise commands
+ * @data: struct containing shell data;
+ * @str: input string
+ *
+ * Return: 0 or 1
  */
 
 int cmd_tok(sh_dt *data, char *str)
@@ -145,12 +150,12 @@ int cmd_tok(sh_dt *data, char *str)
 		n = exec_cmd(data);
 		free(data->args);
 
-		if (n = 0)
+		if (n == 0)
 			break;
 
 		next_cmd(&l_s, &l_c, data);
 
-		if(l_c)
+		if (l_c)
 			l_c = l_c->next;
 	}
 	free_l_sep(&l_s);

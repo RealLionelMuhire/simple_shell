@@ -2,8 +2,8 @@
 
 /**
  * main - entry point of a simple shell
- * av - arguments vector
- * @argc - argments counts
+ * @av: arguments vector
+ * @argc: argments counts
  * Return: always 0 at sucess otherwise specified
  */
 
@@ -12,6 +12,7 @@ int main(char **av, int argc)
 	sh_dt data;
 	char *cmd;
 	int ret;
+	(void) argc;
 
 	while (1)
 	{
@@ -30,13 +31,20 @@ int main(char **av, int argc)
 				free(cmd);
 				continue;
 			}
+			cmd = replace_v(cmd, &data);
+			cmd_tok(&data, cmd);
+			data.count += 1;
+			free(cmd);
 		}
 		else
 		{
 			free(cmd)
 			break;
 		}
-
-
 	}
+
+	free_d(&data);
+	if (data.status < 0)
+		return (255);
+	return (data.status);
 }
