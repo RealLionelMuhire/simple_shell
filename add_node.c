@@ -10,7 +10,7 @@
  * Return: the address of head node
  */
 
-l_v *add_lv_n(lv **head, int lvr, int *v, int lvl)
+l_v *add_lv_n(l_v **head, int lvr, int *v, int lvl)
 {
 	l_v *tmp;
 	l_v *new = malloc(sizeof(l_v));
@@ -60,7 +60,7 @@ l_sep *add_l_sep_n(l_sep **head, char s)
 	else
 	{
 		tmp = *head;
-		while (tmp->mext)
+		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
@@ -86,16 +86,16 @@ cmd_st *add_cmd_st_n(cmd_st **h, char *cmd)
 	new->c_line = cmd;
 	new->next = NULL;
 
-	if (*head == NULL)
-		*head = new;
+	if (*h == NULL)
+		*h = new;
 	else
 	{
-		tmp = *head;
+		tmp = *h;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	return (*head);
+	return (*h);
 }
 
 /**
