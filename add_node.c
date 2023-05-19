@@ -108,7 +108,7 @@ cmd_st *add_cmd_st_n(cmd_st **h, char *cmd)
 void add_sep_cmd_n(l_sep **h_s, cmd_st **h_c, char *str)
 {
 	int i;
-	char tok;
+	char *tok;
 
 	for (i = 0; str[i]; i++)
 	{
@@ -125,6 +125,6 @@ void add_sep_cmd_n(l_sep **h_s, cmd_st **h_c, char *str)
 
 	for (tok = _strtok(str, ";|&"); tok != NULL; tok = _strtok(NULL, ";|&"))
 	{
-		add_cmd_st_n(h_c, ch_repl(*tok, 1));
+		add_cmd_st_n(h_c, ch_repl(tok, 1));
 	}
 }
