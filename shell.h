@@ -115,6 +115,7 @@ char *_memset(char *s, char b, unsigned int n);
 char *_memcpy(char *dest, char *src, unsigned int n);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_lv(l_v **head);
+int free_d(sh_dt *data);
 void free_l_sep(l_sep **h);
 void free_cmd_st(cmd_st **h);
 void *_dp_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
@@ -165,4 +166,12 @@ int cmd_tok(sh_dt *data, char *str);
 
 /*executer*/
 int exec_cmd(sh_dt *data);
+
+/*bultins and envirnonment*/
+int (*_builtin(char *cmd))(sh_dt *data);
+int compare_var(const char *env_var, const char *name);
+char *get_env(const *name, char **env);
+int handle_env(sh_dt *data);
+int handle_exit(sh_dt *data);
+
 #endif

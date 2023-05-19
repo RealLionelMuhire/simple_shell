@@ -10,9 +10,9 @@ int (*_builtin(char *cmd))(sh_dt *data)
 	blt_cmd builtins[] = {
 		{ "env", handle_env },
 		{ "exit", handle_exit },
-		{ "setenv", handle_setenv },
+		/*{ "setenv", handle_setenv },
 		{ "unsetenv", handle_unsetenv },
-		{ "cd", change_dir },
+		{ "cd", change_dir },*/
 		{ NULL, NULL },
 	};
 
@@ -89,4 +89,34 @@ int handle_env(sh_dt *data)
 	}
 	data->status = 0;
 	return (1);
+}
+
+/**
+ * handle_exit - executes exit command to exit the shell
+ * @data: shell data struct
+ *
+ * Return: always 0 on success
+ */
+int handle_exit(sh_dt *data)
+{
+	unsigned int exit_stt;
+	int valid = 1, args_len = 0, is_large = 0;
+
+	if (data->args[1] != NULL)
+	{
+		exit_stt = _atoi(data->args[1]);
+
+		valid = _isvalid(data->args[1]);
+		args_len = _strlen(data->args[1]);
+		is_large = exit_stt > (unsigned int)INT_MAX;
+
+		if (!valid || args_len > 10 || is_large)
+		{
+			write(STDERR_FILENO, "Invalid exit status\n", 20);
+			data->status = 2;
+			return (1);
+		}
+		data->status = exit_stt;
+	}
+	return (0);
 }

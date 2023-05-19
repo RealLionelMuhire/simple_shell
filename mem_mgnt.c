@@ -115,7 +115,7 @@ void free_lv(l_v **head)
 	if (!head)
 	{
 		current = *head;
-		while ((tmp = crrent))
+		while ((tmp = current))
 		{
 			current = current->next;
 			free(tmp);

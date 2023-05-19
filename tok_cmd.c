@@ -33,7 +33,7 @@ char *ch_repl(char *str, int bool)
 
 			}
 
-			i++
+			i++;
 		}
 	}
 	else
@@ -138,7 +138,7 @@ int cmd_tok(sh_dt *data, char *str)
 	cmd_st *h_c = NULL, *l_c;
 	int n;
 
-	dd_sep_cmd_n(&h_s, &h_c, str);
+	add_sep_cmd_n(&h_s, &h_c, str);
 
 	l_s = h_s;
 	l_c = h_c;

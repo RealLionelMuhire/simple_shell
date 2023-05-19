@@ -162,7 +162,7 @@ int err_synt_checker(sh_dt *data, char *str)
 	int init = 0, f_ch, i;
 
 	f_ch = idx_char(str, &init);
-	if (f_char < 0)
+	if (f_ch < 0)
 	{
 		synt_err_print(data, str, init, 0);
 		return (1);

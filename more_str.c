@@ -18,7 +18,7 @@ char *_strtok(char *str, const char *delim)
 	if (str != NULL)
 		ptr = str;
 	else
-		ptr = lats;
+		ptr = last;
 
 	while (*ptr && _strchr(delim, *ptr))
 		ptr++;
