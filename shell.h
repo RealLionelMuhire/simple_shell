@@ -91,7 +91,7 @@ typedef struct list_var
 	char *var_val;
 	int var_len;
 	int val_len;
-	struct list_var *next
+	struct list_var *next;
 } l_v;
 
 /**
@@ -155,7 +155,7 @@ void arr_rev(char *arr, int len);
 char *replace_v(char *str, sh_dt *data);
 
 /*add node*/
-l_v *add_lv_n(l_v **head, int lvr, int *v, int lvl);
+l_v *add_lv_n(l_v **head, int lvr, char *v, int lvl);
 l_sep *add_l_sep_n(l_sep **head, char s);
 cmd_st *add_cmd_st_n(cmd_st **h, char *cmd);
 void add_sep_cmd_n(l_sep **h_s, cmd_st **h_c, char *str);

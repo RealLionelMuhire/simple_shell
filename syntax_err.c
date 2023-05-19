@@ -108,7 +108,7 @@ void synt_err_print(sh_dt *data, char *str, int i, int bool)
 	}
 
 	count = _itoa(data->count);
-	len = _snprintf(NULL, 0, "%s: %s%s%s%s", data->av[0],
+	len = _sprintf(NULL, 0, "%s: %s%s%s%s", data->av[0],
 			count, msg2, msg, msg3) + 1;
 	err = malloc(sizeof(char) * len);
 	if (!err)
