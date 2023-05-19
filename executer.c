@@ -9,7 +9,7 @@
 int check_exec(sh_dt *data)
 {
 	struct stat st;
-	int n = 0;
+	int i = 0;
 	char *str = data->args[0];
 
 	while (str[i] && (str[i] != '.' || (str[i] == '.' &&
@@ -19,15 +19,15 @@ int check_exec(sh_dt *data)
 		{
 			if (str[i + 1] != '.')
 			{
-				n++;
+				i++;
 				break;
 			}
-			n++;
+			i++;
 			break;
 		}
-		n++;
+		i++;
 	}
-	if (n == 0)
+	if (i == 0)
 		return (0);
 
 	if (stat(str + i, &st) == 0)

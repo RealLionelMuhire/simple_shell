@@ -31,7 +31,7 @@ void data_init(char **av, sh_dt *data)
 
 	for (i = 0; environ[i]; i++)
 	{
-		data->env = _strdup(environ[i]);
+		 data->env[i] = _strdup(environ[i]);
 	}
 
 	data->env[i] = NULL;
@@ -70,7 +70,7 @@ char *hash_hand(char *str)
 
 	if (j)
 	{
-		str = _realloc(str, i, j + 1)
+		str = _realloc(str, i, j + 1);
 	}
 	return (str);
 

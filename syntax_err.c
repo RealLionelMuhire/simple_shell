@@ -10,13 +10,13 @@
 int count_repeats(char *s, int start)
 {
 	int count = 0, i;
-	char ch = str[start];
+	char ch = s[start];
 
 	if (!ch)
 		return (0);
 	for (i = start + 1; s[i]; i++)
 	{
-		if (ch == str[i])
+		if (ch == s[i])
 		{
 			count++;
 		}
@@ -88,7 +88,7 @@ void synt_err_print(sh_dt *data, char *str, int i, int bool)
 {
 	char *msg, *err, *count;
 	const char *msg2 = ": Syntax error: \"", *msg3 = "\" unexpected\n";
-	int len, n;
+	int len; 
 
 	switch (str[i])
 	{
