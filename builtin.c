@@ -56,7 +56,7 @@ int compare_var(const char *env_var, const char *name)
  *
  * Return: value of environment variable, otherwise NULL
  */
-char *get_env(const *name, char **env)
+char *get_env(const char *name, char **env)
 {
 	char *val;
 	int i;
