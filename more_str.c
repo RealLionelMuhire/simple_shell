@@ -7,7 +7,7 @@
  *
  * Return: pointer to the next token
  */
-char *_strtok(char *str, const char *delim)
+char *_strtok(char *str,char *delim)
 {
 	static char *last = "";
 	char *token, *ptr;

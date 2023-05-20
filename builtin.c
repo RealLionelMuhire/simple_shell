@@ -56,7 +56,7 @@ int compare_var(const char *env_var, const char *name)
  *
  * Return: value of environment variable, otherwise NULL
  */
-char *get_env(const char *name, char **env)
+char *get_env(char *name, char **env)
 {
 	char *val;
 	int i;
@@ -106,7 +106,7 @@ int handle_exit(sh_dt *data)
 	{
 		exit_stt = _atoi(data->args[1]);
 
-		valid = _isvalid(data->args[1]);
+		valid = _isdigit(data->args[1]);
 		args_len = _strlen(data->args[1]);
 		is_large = exit_stt > (unsigned int)INT_MAX;
 

@@ -159,3 +159,24 @@ char *replace_v(char *str, sh_dt *data)
 
 	return (n_str);
 }
+
+/**
+ * _isdigit - checks if c is a digit between '0' and '9'
+ * @str: string to be checked
+ * Return: 1 if c is a digit, 0 otherwise
+ */
+int _isdigit(char *str)
+{
+	int i;
+
+	if (str == NULL || str[0] == '\0')
+		return (0);
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+	}
+	return (1);
+}
+

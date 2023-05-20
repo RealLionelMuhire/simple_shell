@@ -13,7 +13,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdarg.h>
-#include <stdarg.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 
@@ -128,9 +127,8 @@ int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 char *_strcat(char *dest, char *src);
 int _strncmp(const char *s1, const char *s2, size_t n);
-char *_strtok(char *str, const char *delim);
+char *_strtok(char *str,char *delim);
 int _atoi(char *s);
-int _isdigit(int c);
 
 /*main_helpers*/
 void sigInt(int sigHandler);
@@ -154,6 +152,7 @@ int _intlen(int num);
 char *_itoa(unsigned int n);
 void arr_rev(char *arr, int len);
 char *replace_v(char *str, sh_dt *data);
+int _isdigit(char *str);
 
 /*add node*/
 l_v *add_lv_n(l_v **head, int lvr, char *v, int lvl);
@@ -171,7 +170,7 @@ int exec_cmd(sh_dt *data);
 /*bultins and envirnonment*/
 int (*_builtin(char *cmd))(sh_dt *data);
 int compare_var(const char *env_var, const char *name);
-char *get_env(const char *name, char **env);
+char *get_env(char *name, char **env);
 int handle_env(sh_dt *data);
 int handle_exit(sh_dt *data);
 

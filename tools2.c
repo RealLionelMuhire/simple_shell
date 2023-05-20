@@ -1,35 +1,5 @@
 #include "shell.h"
 
-/**
- * exit_shell - exits the shell.
- * @data: Pointer to the shell data struct
- * Return: Always return 0
- */
-int exit_shell(sh_dt *data)
-{
-	int status = 0, n, i = 0;
-	char *arg = data->args[1];
-
-	if (data->args[1] != NULL)
-	{
-		i = 0;
-		while (arg[i] != '\0')
-		{
-			n = _isdigit(arg[i]);
-			if (!n)
-			{
-				printf("exit: Illegal number: %s\n", arg);
-				break;
-
-			}
-			i++;
-		}
-		status = _atoi(arg);
-	}
-	free_d(data);
-	fflush(stdout);
-	exit(status);
-}
 
 /**
  * _intlen - Computes the number of digit in a number
