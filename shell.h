@@ -15,6 +15,7 @@
 #include <stdarg.h>
 #include <stdarg.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 
 /*global variables to environment*/
 extern char **environ;
@@ -170,7 +171,7 @@ int exec_cmd(sh_dt *data);
 /*bultins and envirnonment*/
 int (*_builtin(char *cmd))(sh_dt *data);
 int compare_var(const char *env_var, const char *name);
-char *get_env(const *name, char **env);
+char *get_env(const char *name, char **env);
 int handle_env(sh_dt *data);
 int handle_exit(sh_dt *data);
 

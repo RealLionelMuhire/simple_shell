@@ -57,8 +57,8 @@ int exec_cmd(sh_dt *data)
 		execve(data->args[0], data->args, data->env);
 	else if (pid < 0)
 	{
-		perror(data->av[0]);
-		return (1);
+		perror("fork");
+		exit(1);
 	}
 	else
 	{

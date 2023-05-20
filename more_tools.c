@@ -1,51 +1,4 @@
 #include "shell.h"
-/**
- * _sprintf - Custom implementation of sprintf
- * @str: Buffer to store the formatted string
- * @format: Format string
- * Return: Number of characters written to the
- * --------buffer (excluding null terminator)
- */
-int _sprintf(char *str, const char *format, ...)
-{
-	char *s;
-	va_list args;
-	int j = 0, n, len;
-
-	va_start(args, format);
-	while (*format != '\0')
-	{
-		if (*format == '%')
-		{
-			format++; /* skip '%' */
-			switch (*format)
-			{
-				case 's':
-					s = va_arg(args, char *);
-					len = 0;
-					while (s[len] != '\0')
-						len++;
-					j += write_str(str + j, s, len);
-				break;
-				case 'd':
-					n = va_arg(args, int);
-					j += write_int(str + j, n);
-				break;
-				default:
-				str[j++] = *format;
-				break;
-			}
-		}
-		else
-		{
-			str[j++] = *format;
-		}
-		format++;
-		}
-		va_end(args);
-		str[j] = '\0'; /* null-terminate the string */
-		return (j);
-}
 
 /**
  * check_env - checks if the typed variable is the environment var
@@ -90,7 +43,7 @@ void check_env(l_v **h, char *str, sh_dt *data)
  * -------- and allows the user to continue processing the rest
  */
 
-int dollar_sign_h(l_v **h, char *str, char stat, sh_dt data)
+int dollar_sign_h(l_v **h, char *str, char *stat, sh_dt *data)
 {
 	int i, j, k;
 
@@ -131,9 +84,9 @@ int dollar_sign_h(l_v **h, char *str, char stat, sh_dt data)
  *
  * Return: replaced str
  */
-char *str_replace(l_v **head, char *s, char *n_s, n_l)
+char *str_replace(l_v **head, char *s, char *n_s,int n_l)
 {
-	l_v current = *head;
+	l_v *current = *head;
 	int i, j, k;
 
 	for (i = j = 0; i < n_l; i++, j++)
@@ -198,7 +151,7 @@ char *replace_v(char *str, sh_dt *data)
 	n_str = malloc(new_len + 1);
 	n_str[new_len] = '\0';
 
-	str_replace(head, str, n_str, new_len);
+	str_replace(&head, str, n_str, new_len);
 
 	free(str);
 	free(state);
