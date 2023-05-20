@@ -10,15 +10,16 @@
  * Return: s when success
  */
 
-char *_memset(char *s, char b, unsigned int n)
+void *_memset(void *s, char b, size_t n)
 {
-	unsigned int i;
+	unsigned char *ptr = s;
+	size_t i;
 
 	for (i = 0; i < n; i++)
 	{
-		s[i] = b;
+		ptr[i] = (unsigned char)b;
 	}
-	return (s);
+	return (ptr);
 }
 
 

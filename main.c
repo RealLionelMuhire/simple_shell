@@ -1,4 +1,4 @@
-#include "shell"
+#include "shell.h"
 
 /**
  * main - entry point of a simple shell
@@ -7,27 +7,28 @@
  * Return: always 0 at sucess otherwise specified
  */
 
-int main(char **av, int argc)
+int main(int argc, char **av)
 {
 	sh_dt data;
 	char *cmd;
 	int ret;
 	(void) argc;
 
+	signal(SIGINT, sigInt);
+	data_init(av, &data);
 	while (1)
 	{
 		PRINT("$ ");
 		cmd = get_input(&ret);
-
 		if (ret != -1)
 		{
 			cmd = hash_hand(cmd);
 			if (cmd == NULL)
 				continue;
 
-			if (err_synt_checker(data, cmd) == 1)
+			if (err_synt_checker(&data, cmd) == 1)
 			{
-				data->status = 2;
+				data.status = 2;
 				free(cmd);
 				continue;
 			}
@@ -38,7 +39,7 @@ int main(char **av, int argc)
 		}
 		else
 		{
-			free(cmd)
+			free(cmd);
 			break;
 		}
 	}

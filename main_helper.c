@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * sigHandler - handle Ctrl+C to prompt the user
  * @sigNum: signal Handler
@@ -86,7 +85,7 @@ char *get_input(int *ret)
 {
 	char *cmd = NULL;
 
-	ret = getline(&cmd, 0, stdin);
+	*ret = getline(&cmd, 0, stdin);
 
-	return (char);
+	return (cmd);
 }

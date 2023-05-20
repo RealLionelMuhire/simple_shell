@@ -43,7 +43,7 @@ extern char **environ;
 typedef struct shell_data
 {
 	char *line;
-	char *av;
+	char **av;
 	char **args;
 	char **env;
 	char *pid;
@@ -112,7 +112,7 @@ typedef struct list_separators
 /*prototypes*/
 
 /*memory managements prototypes*/
-char *_memset(char *s, char b, unsigned int n);
+void *_memset(void *s, char b, size_t n);
 char *_memcpy(char *dest, char *src, unsigned int n);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_lv(l_v **head);
