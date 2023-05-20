@@ -84,7 +84,7 @@ int dollar_sign_h(l_v **h, char *str, char *stat, sh_dt *data)
  *
  * Return: replaced str
  */
-char *str_replace(l_v **head, char *s, char *n_s,int n_l)
+char *str_replace(l_v **head, char *s, char *n_s, int n_l)
 {
 	l_v *current = *head;
 	int i, j, k;

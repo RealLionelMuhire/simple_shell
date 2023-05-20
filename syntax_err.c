@@ -88,7 +88,7 @@ void synt_err_print(sh_dt *data, char *str, int i, int bool)
 {
 	char *msg, *err, *count;
 	const char *msg2 = ": Syntax error: \"", *msg3 = "\" unexpected\n";
-	int len; 
+	int len;
 
 	switch (str[i])
 	{

@@ -30,7 +30,7 @@ void data_init(char **av, sh_dt *data)
 
 	for (i = 0; environ[i]; i++)
 	{
-		 data->env[i] = _strdup(environ[i]);
+		data->env[i] = _strdup(environ[i]);
 	}
 
 	data->env[i] = NULL;
