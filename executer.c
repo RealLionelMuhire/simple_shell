@@ -11,9 +11,11 @@ int check_exec(sh_dt *data)
 	struct stat st;
 	int i = 0;
 	char *str = data->args[0];
-
-	while (str[i] && (str[i] != '.' || (str[i] == '.' &&
-					str[i + 1] != '/')))
+	
+	if (str == NULL)
+		return (0);
+	
+	while (str[i] != '\0' && (str[i] != '.' || (str[i] == '.' && str[i + 1] != '/')))
 	{
 		if (str[i] == '/')
 		{
@@ -51,6 +53,8 @@ int exec_cmd(sh_dt *data)
 	run = check_exec(data);
 	if (run == -1)
 		return (1);
+
+	printf("Check execution work\n");
 
 	pid = fork();
 	if (pid == 0)

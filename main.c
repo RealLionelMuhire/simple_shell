@@ -14,7 +14,7 @@ int main(int argc, char **av)
 	int ret;
 	(void) argc;
 
-	signal(SIGINT, sigInt);
+	signal(SIGINT, sigHandler);
 	data_init(av, &data);
 	while (1)
 	{

@@ -84,8 +84,9 @@ char *hash_hand(char *str)
 char *get_input(int *ret)
 {
 	char *cmd = NULL;
+	size_t n = 0;
 
-	*ret = getline(&cmd, 0, stdin);
+	*ret = getline(&cmd, &n, stdin);
 
 	return (cmd);
 }

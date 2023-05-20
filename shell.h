@@ -131,7 +131,7 @@ char *_strtok(char *str,char *delim);
 int _atoi(char *s);
 
 /*main_helpers*/
-void sigInt(int sigHandler);
+void sigHandler(int sigNum);
 void data_init(char **av, sh_dt *data);
 char *get_input(int *ret);
 char *hash_hand(char *str);

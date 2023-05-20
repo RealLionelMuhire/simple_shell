@@ -37,10 +37,10 @@ int get_err_sep(char *str, int i, char j)
 {
 	int count;
 
-	if (!str)
+	if (str == NULL)
 		return (0);
 
-	if (*str == ' ' || *str == '\t')
+	if (*str == '\0' || *str == ' ' || *str == '\t')
 		return (get_err_sep(str + 1, i + 1, j));
 
 	switch (*str)
@@ -74,7 +74,7 @@ int get_err_sep(char *str, int i, char j)
 		default:
 			break;
 	}
-	return (get_err_sep(str + 1, i + 1, *str));
+	return (0);
 }
 
 /**
