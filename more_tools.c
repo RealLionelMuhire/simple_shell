@@ -130,6 +130,7 @@ char *replace_v(char *str, sh_dt *data)
 	char *state = _itoa(data->status), *n_str;
 	int new_len = 0;
 
+
 	dollar_sign_h(&head, str, state, data);
 
 	if (!head)
