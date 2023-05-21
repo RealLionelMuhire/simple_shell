@@ -54,7 +54,7 @@ int exec_cmd(sh_dt *data)
 	if (run == -1)
 		return (1);
 
-	printf("Check execution work\n");
+	printf("Check execution work, Pathame to execute: %s\n", data->args[0]);
 
 	pid = fork();
 	if (pid == 0)
