@@ -145,9 +145,6 @@ int cmd_tok(sh_dt *data, char *str)
 	l_s = h_s;
 	l_c = h_c;
 
-	printf("Command passed is '%s'\n", l_c->c_line);
-	exit(90);
-
 	while (l_c)
 	{
 		data->line = l_c->c_line;
