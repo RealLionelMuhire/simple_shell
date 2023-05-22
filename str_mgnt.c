@@ -55,22 +55,22 @@ int _strlen(char *s)
 
 int _strcmp(char *s1, char *s2)
 {
-	int j, k;
+	int j = 0;
 
-	for (j = 0; s1[j] != '\0'; j++)
+	if (s1 == NULL && s2 == NULL)
+		return (0);
+
+	else if (s1 == NULL)
+		return (-1);
+
+	else if (s2 == NULL)
+		return (1);
+
+	while (s1[j] != '\0' && s1[j] == s2[j])
 	{
-		if (s1[j] == s2[j])
-		{
-			;
-		}
-		else
-		{
-			break;
-		}
+		j++;
 	}
-	k = s1[j] - s2[j];
-
-	return (k);
+	return (s1[j] - s2[j]);
 }
 
 /**

@@ -1,6 +1,18 @@
 #include "shell.h"
 
 /**
+ */
+int blt_cmd_h(sh_dt *data)
+{
+	int(*bltn)(sh_dt *data) = _builtin(data->args[0]);
+
+	if (data->args[0] == NULL)
+		return (1);
+
+	return ((bltn != NULL) ? bltn(data) : exec_cmd(data));
+}
+
+/**
  * check_exec - it checks weather it is executable
  * @data: shell data containin all data
  * Return: 0 if it is not execitable, positive int otherwise
@@ -75,3 +87,4 @@ int exec_cmd(sh_dt *data)
 	data->status = state / 256;
 	return (1);
 }
+

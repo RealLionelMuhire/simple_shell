@@ -166,6 +166,7 @@ int cmd_tok(sh_dt *data, char *str);
 
 /*executer*/
 int exec_cmd(sh_dt *data);
+int blt_cmd_h(sh_dt *data);
 
 /*bultins and envirnonment*/
 int (*_builtin(char *cmd))(sh_dt *data);

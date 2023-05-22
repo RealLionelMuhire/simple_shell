@@ -138,15 +138,21 @@ int cmd_tok(sh_dt *data, char *str)
 	cmd_st *h_c = NULL, *l_c;
 	int n;
 
+
 	add_sep_cmd_n(&h_s, &h_c, str);
+	
 
 	l_s = h_s;
 	l_c = h_c;
+
+	printf("Command passed is '%s'\n", l_c->c_line);
+	exit(90);
+
 	while (l_c)
 	{
 		data->line = l_c->c_line;
 		data->args = tok_line(data->line);
-		n = exec_cmd(data);
+		n = blt_cmd_h(data);
 		free(data->args);
 
 		if (n == 0)
