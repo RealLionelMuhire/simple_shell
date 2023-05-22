@@ -142,7 +142,6 @@ int cmd_tok(sh_dt *data, char *str)
 
 	l_s = h_s;
 	l_c = h_c;
-
 	while (l_c)
 	{
 		data->line = l_c->c_line;
