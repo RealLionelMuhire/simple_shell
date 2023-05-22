@@ -109,6 +109,7 @@ void add_sep_cmd_n(l_sep **h_s, cmd_st **h_c, char *str)
 {
 	int i;
 	char *tok;
+
 	for (i = 0; str[i]; i++)
 	{
 		if (str[i] == '|' || str[i] == '&')

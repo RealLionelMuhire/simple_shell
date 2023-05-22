@@ -11,11 +11,13 @@ int check_exec(sh_dt *data)
 	struct stat st;
 	int i = 0;
 	char *str = data->args[0];
-	
+
 	if (str == NULL)
 		return (0);
-	
-	while (str[i] != '\0' && (str[i] != '.' || (str[i] == '.' && str[i + 1] != '/')))
+
+	while (str[i] != '\0' &&
+		       (str[i] != '.' ||
+		(str[i] == '.' && str[i + 1] != '/')))
 	{
 		if (str[i] == '/')
 		{
