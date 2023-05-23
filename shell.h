@@ -175,4 +175,8 @@ char *get_env(char *name, char **env);
 int handle_env(sh_dt *data);
 int handle_exit(sh_dt *data);
 
+/*environ*/
+int handle_setenv(sh_dt *data);
+char *create_copy(char *name, char *value);
+
 #endif
