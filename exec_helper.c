@@ -12,7 +12,7 @@ int is_cur_dir(char *p, int *n)
 		return (1);
 
 	while (p[*n] && p[*n] != ':')
-		(*i)++;
+		(*n)++;
 
 	if (p[*n])
 		(*n)++;
@@ -26,7 +26,7 @@ int is_cur_dir(char *p, int *n)
  * @env: environment variable
  * Return: command if is found otherwise NULL
  */
-char loc_exec(char *cmd, char **env)
+char *loc_exec(char *cmd, char **env)
 {
 	char *path, *path_copy, *token, *dir;
 	int dir_length, command_length;
@@ -37,18 +37,18 @@ char loc_exec(char *cmd, char **env)
 	if (path)
 	{
 		path_copy = _strdup(path);
-		command_length = _strlen(command);
+		command_length = _strlen(cmd);
 		token = _strtok(path_copy, ":");
 		while (token != NULL)
 		{
-			if (is_cur_dir(token, &(int)
-						{0}) && stat(command, &st) == 0)
+			if (is_cur_dir(token, 0) && stat(cmd, &st) == 0)
 			{
-				return (command);
+				free(path_copy);
+				return (cmd);
 			}
 			dir_length = _strlen(token);
 			dir = malloc(dir_length + command_length + 2);
-			_sprintf(dir, "%s/%s", token, command);
+			_sprintf(dir, "%s/%s", token, cmd);
 			if (stat(dir, &st) == 0)
 			{
 				free(path_copy);
@@ -57,10 +57,14 @@ char loc_exec(char *cmd, char **env)
 			free(dir);
 			token = strtok(NULL, ":");
 		}
-		if (command[0] == '/' && stat(command, &st) == 0)
-			return (command);
-		return (NULL);
+		if (cmd[0] == '/' && stat(cmd, &st) == 0)
+		{
+			free(path_copy);
+			return (cmd);
+		}
+		free(path_copy);
 	}
+	return (NULL);
 }
 
 /**
@@ -81,7 +85,7 @@ int err_checker(char *ch, sh_dt *data)
 	}
 
 	if (_strcmp(data->args[0], ch) != 0)
-		acc_res = access(dir, X_OK);
+		acc_res = access(ch, X_OK);
 	else
 		acc_res = access(data->args[0], X_OK);
 

@@ -13,7 +13,7 @@ int get_err(sh_dt *data, int val_err)
 	if (val_err == -1)
 		error = error_env(data);
 	else if (val_err == 126)
-		error = err_p_126err_p_126(data);
+		error = err_p_126(data);
 	else if (val_err == 127)
 		error = err_n_found(data);
 	else if (val_err == 2)
@@ -43,7 +43,7 @@ int get_err(sh_dt *data, int val_err)
  * @ver_str: count lines
  * Return: error message
  */
-char *cat_msg(sh_dt *data, const char *msg, char *err, const char *ver_str)
+char *cat_msg(sh_dt *data, char *msg, char *err, const char *ver_str)
 {
 	_sprintf(err, "%s: %s: %s%s", data->av[0], ver_str, data->args[0], msg);
 	if (data->args[1][0] == '-')
@@ -61,9 +61,9 @@ char *cat_msg(sh_dt *data, const char *msg, char *err, const char *ver_str)
  * Return: Error message
  */
 char *err_cd(sh_dt *data)
-{err_exit_sh
+{
 	char *count_str = _itoa(data->count), *error_msg;
-	const char *msg = (datash->args[1][0] == '-') ?
+	char *msg = (data->args[1][0] == '-') ?
 		": Illegal option " : ": can't cd to ";
 	int total_len = _strlen(data->av[0]) + _strlen(data->args[0]) +
 		_strlen(count_str) + _strlen(msg) + strlen(data->args[1]) + 5;
@@ -129,7 +129,7 @@ char *err_exit_sh(sh_dt *data)
 	}
 
 	_sprintf(error_msg, "%s: %s: %s: Illegal number: %s\n", data->av[0],
-			counter_str, datash->args[0], datash->args[1]);
+			counter_str, data->args[0], data->args[1]);
 	free(counter_str);
 
 	return (error_msg);
