@@ -168,6 +168,9 @@ int cmd_tok(sh_dt *data, char *str);
 int exec_cmd(sh_dt *data);
 int blt_cmd_h(sh_dt *data);
 
+/*exec_helper*/
+char loc_exec(char *cmd, char **env);
+
 /*bultins and envirnonment*/
 int (*_builtin(char *cmd))(sh_dt *data);
 int compare_var(const char *env_var, const char *name);

@@ -79,7 +79,7 @@ int exec_cmd(sh_dt *data)
 
 	if (run == 0)
 	{
-		p = _which(data->args[0], data->env);
+		p = loc_exec(data->args[0], data->env);
 		if (err_check(p, data) == 1)
 		{
 			free(p);
@@ -91,7 +91,7 @@ int exec_cmd(sh_dt *data)
 	pid = fork();
 	if (pid == 0)
 	{
-		p = (run == 0) ? _which(data->args[0], data->env) : data->args[0];
+		p = (run == 0) ? loc_exec(data->args[0], data->env) : data->args[0];
 		execve(p + run, data->args, data->env);
 	}
 	else if (pid < 0)
