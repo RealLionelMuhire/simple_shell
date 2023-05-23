@@ -31,51 +31,59 @@ char *create_copy(char *name, char *value)
 }
 
 /**
- * handle_setenv - sets environment variable and creates a new one
- * @data: pointer to shell structure
+ * set_env - stes new environment
  * @name: string name
  * @value: string value
+ * @data: pointer to shell structure
+ */
+void set_env(char *name, char *value, sh_dt *data)
+{
+	int i;
+	size_t env_size;
+	char *var_env, *name_env, **new_env;
+
+	for (i = 0; data->env[i]; i++)
+	{
+		var_env = strdup(data->env[i]);
+		name_env = strtok(var_env, "=");
+		if (_strcmp(name_env, name) == 0)
+		{
+			free(data->env[i]);
+			data->env[i] = create_copy(name_env, value);
+			free(var_env);
+			return;
+		}
+		free(var_env);
+	}
+	env_size = sizeof(char *) * (i + 2);
+	new_env = _dp_realloc(data->env, env_size, env_size);
+	if (new_env == NULL)
+		return;
+	data->env = new_env;
+	data->env[i] = create_copy(name, value);
+	data->env[i + 1] = NULL;
+}
+
+/**
+ * handle_setenv - sets environment variable and creates a new one
+ * @data: pointer to shell structure
  *
  * Return: 1 on success, 0 on failure
  */
-int handle_setenv(sh_dt *data, const char *name, const  char *value)
+int handle_setenv(sh_dt *data)
 {
-	char **env = data->env;
-	int i, count_env = 0;
-	char *env_var, *env_name, **env_new;
+	char **args = data->args;
 
-	for (i = 0; env[i]; i++)
+	if (args[1] == NULL || args[2] == NULL)
 	{
-		count_env++;
+		get_err(data, -1);
+		return (1);
 	}
 
-	for (i = 0; env[i]; i++)
-	{
-		env_var = _strdup(env[i]);
-		env_name = strtok(env_var, "=");
-		if (_strcmp(env_name, name) == 0)
-		{
-			free(env[i]);
-			env[i] = malloc(_strlen(name) + _strlen(value) + 2);
-			_sprintf(env[i], "%s=%s", name, value);
-			free(env_var);
-			return (1);
-		}
-		free(env_var);
-	}
-
-	env_new = _dp_realloc(env, (count_env + 2) * sizeof(char *));
-	if (env_new == NULL)
-		return (0);
-
-	env_new[count_env] = malloc(_strlen(name) + _strlen(value) + 2);
-	_sprintf(env_new[count_env], "%s=%s", name, value);
-	env_new[count_new + 1] = NULL;
-
-	data->env = env_new;
-
+	set_env(args[1], args[2], data);
 	return (1);
 }
+
 
 /**
  * handle_unsetenv - deletes an environment varibale
@@ -87,7 +95,7 @@ int handle_unsetenv(sh_dt *data)
 {
 	char *name = data->args[1], **env = data->env;
 	int i, j = 0, count_env = 0;
-	char *env_var, env_name, **env_new;
+	char *env_var, *env_name, **env_new;
 
 	if (name == NULL)
 	{
@@ -106,12 +114,12 @@ int handle_unsetenv(sh_dt *data)
 	if (env_new == NULL)
 	{
 		get_err(data, -1);
-		return (1);
+		return (-1);
 	}
 	for (i = 0; env[i]; i++)
 	{
 		env_var = _strdup(env[i]);
-		nv_name = strtok(env_var, "=");
+		env_name = strtok(env_var, "=");
 		if (_strcmp(env_name, name) != 0)
 		{
 			env_new[j] = env[i];
@@ -121,9 +129,9 @@ int handle_unsetenv(sh_dt *data)
 			free(env[i]);
 		free(env_var);
 	}
-	env_new[j] = NULL;
+	env_new[count_env] = NULL;
 	free(env);
-	env = nev_new;
+	data->env = env_new;
 	return (1);
 }
 

@@ -9,14 +9,14 @@ void cd_to_cd(sh_dt *data)
 	char wd[PATH_MAX];
 	char *dir, *cp_wd, *cp_to_wd;
 
-	getcwd(wdsizeof(wd));
+	getcwd(wd, sizeof(wd));
 	cp_wd = _strdup(wd);
-	handle_setenv("OLDPWD", cp_wd, data);
+	set_env("OLDPWD", cp_wd, data);
 
 	dir = data->args[1];
 	if (_strcmp(".", dir) == 0)
 	{
-		handle_setenv("PWD", cp_wd, data);
+		set_env("PWD", cp_wd, data);
 		free(cp_wd);
 		return;
 	}
@@ -26,23 +26,23 @@ void cd_to_cd(sh_dt *data)
 		return;
 	}
 	cp_to_wd = cp_wd;
-	strrev(cp_to_wd);
+	arr_rev(cp_to_wd, _strlen(cp_to_wd));
 	cp_to_wd = strtok(cp_to_wd, "/");
 	if (cp_to_wd != NULL)
 	{
 		cp_to_wd = strtok(NULL, "\0");
 		if (cp_to_wd != NULL)
-			strrev(cp_to_wd);
+			arr_rev(cp_to_wd, _strlen(cp_to_wd));
 	}
 	if (cp_to_wd != NULL)
 	{
 		chdir(cp_to_wd);
-		handle_setenv("PWD", cp_to_wd, data);
+		set_env("PWD", cp_to_wd, data);
 	}
 	else
 	{
 		chdir("/");
-		handle_setenv("PWD", "/", data);
+		set_env("PWD", "/", data);
 	}
 	data->status = 0;
 	free(cp_wd);
@@ -54,7 +54,7 @@ void cd_to_cd(sh_dt *data)
  */
 void cd_to_sd(sh_dt *data)
 {
-	char *hom_dir, prev_dir, error[PATH_MAX + 20];
+	char *hom_dir, *prev_dir, error[PATH_MAX + 20];
 	char *wd = NULL, *oldwd = NULL, *dir = data->args[1];
 
 	if (dir == NULL)
@@ -92,8 +92,8 @@ void cd_to_sd(sh_dt *data)
 		free(wd);
 		return;
 	}
-	handle_setenv("OLDPWD", oldwd, data);
-	handle_setenv("PWD", getcwd(NULL, 0), data);
+	set_env("OLDPWD", oldwd, data);
+	set_env("PWD", getcwd(NULL, 0), data);
 	free(oldwd);
 	free(wd);
 	data->status = 0;
@@ -118,13 +118,13 @@ void cd_to_pd(sh_dt *data)
 	{
 		_sprintf(error, "cd: %s: No such file or directory\n", oldwd);
 		PRINT_ERR(error);
+		free(oldwd);
 		free(wd);
 		return;
 	}
-	handle_setenv("OLDPWD", wd, data);
-	handle_setenv("PWD", getcwd(NULL, 0), data);
-	printf("%s\n", getcwd(NULL, 0));
-
+	set_env("OLDPWD", wd, data);
+	set_env("PWD", getcwd(NULL, 0), data);
+	free(oldwd);
 	free(wd);
 	data->status = 0;
 }
@@ -151,8 +151,8 @@ void cd_to_home(sh_dt *data)
 		free(wd);
 		return;
 	}
-	handle_setenv("OLDPWD", wd, data);
-	handle_setenv("PWD", getcwd(NULL, 0), data);
+	set_env("OLDPWD", wd, data);
+	set_env("PWD", getcwd(NULL, 0), data);
 
 	free(wd);
 	data->status = 0;

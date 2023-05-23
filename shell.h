@@ -182,8 +182,9 @@ int handle_env(sh_dt *data);
 int handle_exit(sh_dt *data);
 
 /*environ*/
-int handle_setenv(sh_dt *data);
 char *create_copy(char *name, char *value);
+void set_env(char *name, char *value, sh_dt *data);
+int handle_setenv(sh_dt *data);
 int handle_unsetenv(sh_dt *data);
 
 /*error_handler*/
