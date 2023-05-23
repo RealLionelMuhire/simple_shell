@@ -140,7 +140,7 @@ int cmd_tok(sh_dt *data, char *str)
 
 
 	add_sep_cmd_n(&h_s, &h_c, str);
-	
+
 
 	l_s = h_s;
 	l_c = h_c;

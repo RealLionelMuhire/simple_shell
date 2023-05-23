@@ -127,7 +127,7 @@ int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 char *_strcat(char *dest, char *src);
 int _strncmp(const char *s1, const char *s2, size_t n);
-char *_strtok(char *str,char *delim);
+char *_strtok(char *str, char *delim);
 int _atoi(char *s);
 
 /*main_helpers*/
@@ -170,6 +170,9 @@ int blt_cmd_h(sh_dt *data);
 
 /*exec_helper*/
 char loc_exec(char *cmd, char **env);
+char *error_env(sh_dt *data);
+int err_checker(char *ch, sh_dt *data);
+char *err_p_126(sh_dt *data);
 
 /*bultins and envirnonment*/
 int (*_builtin(char *cmd))(sh_dt *data);
@@ -183,7 +186,11 @@ int handle_setenv(sh_dt *data);
 char *create_copy(char *name, char *value);
 int handle_unsetenv(sh_dt *data);
 
-/*errer_handler*/
+/*error_handler*/
 int get_err(sh_dt *data, int val_err);
+char *cat_msg(sh_dt *data, const char *msg, char *err, const char *ver_str);
+char *err_cd(sh_dt *data);
+char *err_exit_sh(sh_dt *data);
+char *err_n_found(sh_dt *data);
 
 #endif
