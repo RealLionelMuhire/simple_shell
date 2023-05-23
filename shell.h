@@ -193,4 +193,11 @@ char *err_cd(sh_dt *data);
 char *err_exit_sh(sh_dt *data);
 char *err_n_found(sh_dt *data);
 
+/* change_dir*/
+void cd_to_cd(sh_dt *data);
+void cd_to_sd(sh_dt *data);
+void cd_to_pd(sh_dt *data);
+void cd_to_home(sh_dt *data);
+int change_dir(sh_dt *data);
+
 #endif

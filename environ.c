@@ -91,7 +91,7 @@ int handle_unsetenv(sh_dt *data)
 
 	if (name == NULL)
 	{
-		get_erro(data, -1);
+		get_err(data, -1);
 		return (-1);
 	}
 	for (i = 0; env[i]; i++)
@@ -105,7 +105,7 @@ int handle_unsetenv(sh_dt *data)
 	env_new = malloc(sizeof(char *) * (count_env + 1));
 	if (env_new == NULL)
 	{
-		get_error(data, -1);
+		get_err(data, -1);
 		return (1);
 	}
 	for (i = 0; env[i]; i++)
