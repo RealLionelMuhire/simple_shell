@@ -54,8 +54,7 @@ void cd_to_cd(sh_dt *data)
  */
 void cd_to_sd(sh_dt *data)
 {
-	char *hom_dir, *prev_dir, error[PATH_MAX + 20];
-	char *wd = NULL, *oldwd = NULL, *dir = data->args[1];
+	char *hom_dir, *prev_dir, error[PATH_MAX + 20], *oldwd, *dir = data->args[1];
 
 	if (dir == NULL)
 	{
@@ -77,11 +76,10 @@ void cd_to_sd(sh_dt *data)
 		}
 		dir = prev_dir;
 	}
-	wd = getcwd(NULL, 0);
-	if (wd == NULL)
+	oldwd = getcwd(NULL, 0);
+	if (oldwd == NULL)
 	{
 		perror("cd");
-		free(wd);
 		return;
 	}
 	if (chdir(dir) == -1)
@@ -89,13 +87,12 @@ void cd_to_sd(sh_dt *data)
 		_sprintf(error, "cd: %s: No such file or directory\n", dir);
 		PRINT_ERR(error);
 		free(oldwd);
-		free(wd);
 		return;
 	}
 	set_env("OLDPWD", oldwd, data);
 	set_env("PWD", getcwd(NULL, 0), data);
 	free(oldwd);
-	free(wd);
+	free(getcwd(NULL, 0));
 	data->status = 0;
 }
 

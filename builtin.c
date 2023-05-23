@@ -5,7 +5,7 @@
  * @cmd: command
  * Return: function pointer of the builtin command
  */
-int (*_builtin(char *cmd))(sh_dt *data)
+int (*_builtin(char *cmd))(sh_dt *)
 {
 	blt_cmd builtins[] = {
 		{ "env", handle_env },
