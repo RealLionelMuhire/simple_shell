@@ -12,10 +12,10 @@ int is_cur_dir(char *p, int *n)
 		return (1);
 
 	while (p[*n] && p[*n] != ':')
-		(*n)++;
+		*n += 1;
 
 	if (p[*n])
-		(*n)++;
+		*n += 1;
 
 	return (0);
 }
@@ -29,7 +29,7 @@ int is_cur_dir(char *p, int *n)
 char *loc_exec(char *cmd, char **env)
 {
 	char *path, *path_copy, *token, *dir;
-	int dir_length, command_length;
+	int dir_length, command_length, i = 0;
 	struct stat st;
 
 	path = get_env("PATH", env);
@@ -38,10 +38,10 @@ char *loc_exec(char *cmd, char **env)
 	{
 		path_copy = _strdup(path);
 		command_length = _strlen(cmd);
-		token = _strtok(path_copy, ":");
+		token = strtok(path_copy, ":");
 		while (token != NULL)
 		{
-			if (is_cur_dir(token, 0) && stat(cmd, &st) == 0)
+			if (is_cur_dir(token, &i) && stat(cmd, &st) == 0)
 			{
 				free(path_copy);
 				return (cmd);

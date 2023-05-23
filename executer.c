@@ -19,38 +19,41 @@ int blt_cmd_h(sh_dt *data)
 
 }
 
-/**
- * check_exec - it checks weather it is executable
- * @data: shell data containin all data
- ** Return: 0 if it is not execitable, positive int otherwise
- */
 
+/**
+ * check_exec - it checks whether it is executable
+ * @data: shell data containing all data
+ * Return: 0 if it is not executable, positive int otherwise
+ */
 int check_exec(sh_dt *data)
 {
 	struct stat st;
 	int i = 0;
 	char *str = data->args[0];
 
-	if (str == NULL)
-		return (0);
-
-
-	while (str[i] != '\0' &&
-		       (str[i] != '.' ||
-		(str[i] == '.' && str[i + 1] != '/')))
+	for (; str[i]; i++)
 	{
-		if (str[i] == '/')
+		if (str[i] == '.')
 		{
-			if (str[i + 1] != '.')
-			{
-				i++;
+			if (str[i + 1] == '.')
+				return (0);
+			if (str[i + 1] == '/')
+				continue;
+			else
 				break;
-			}
+
+		}
+		else if (str[i] == '/' && i != 0)
+		{
+			if (str[i + 1] == '.')
+				continue;
 			i++;
 			break;
 		}
-		i++;
+		else
+			break;
 	}
+
 	if (i == 0)
 		return (0);
 
