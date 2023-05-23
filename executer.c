@@ -15,7 +15,7 @@ int blt_cmd_h(sh_dt *data)
 /**
  * check_exec - it checks weather it is executable
  * @data: shell data containin all data
- * Return: 0 if it is not execitable, positive int otherwise
+ ** Return: 0 if it is not execitable, positive int otherwise
  */
 
 int check_exec(sh_dt *data)
@@ -26,6 +26,7 @@ int check_exec(sh_dt *data)
 
 	if (str == NULL)
 		return (0);
+
 
 	while (str[i] != '\0' &&
 		       (str[i] != '.' ||
@@ -48,6 +49,8 @@ int check_exec(sh_dt *data)
 
 	if (stat(str + i, &st) == 0)
 		return (i);
+	printf("The command is %s and i is %i\n", str, i);
+        exit(90);
 
 	PRINT_ERR(": Permission denied\n");
 	return (-1);
@@ -65,7 +68,7 @@ int exec_cmd(sh_dt *data)
 	(void) wpid;
 
 	run = check_exec(data);
-	if (run == -1)
+	if (run == -1 || (run == 0 && check_error_cmd((p = _which(data->args[0], data->env)), data) == 1))
 		return (1);
 
 

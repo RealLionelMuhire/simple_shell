@@ -102,7 +102,7 @@ char **tok_line(char *str)
 		exit(EXIT_FAILURE);
 	}
 
-	tok = _strtok(str, DELIMITER);
+	tok = strtok(str, DELIMITER);
 
 	while (tok)
 	{
@@ -119,7 +119,7 @@ char **tok_line(char *str)
 				exit(EXIT_FAILURE);
 			}
 		}
-		tok = _strtok(NULL, DELIMITER);
+		tok = strtok(NULL, DELIMITER);
 	}
 	return (toks);
 }
