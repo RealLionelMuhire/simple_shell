@@ -71,7 +71,7 @@ int check_exec(sh_dt *data)
  */
 int exec_cmd(sh_dt *data)
 {
-	char *exec_path = NULL, *cmd_path;
+	char *exec_path = NULL;
 	pid_t pid;
 	int state, run;
 
@@ -82,22 +82,23 @@ int exec_cmd(sh_dt *data)
 	if (run == 0)
 	{
 		exec_path = loc_exec(data->args[0], data->env);
-		if (exec_path == NULL)
+		if (err_checker(exec_path, data) == 1)
 			return (1);
 	}
 
 	pid = fork();
+
 	if (pid == 0)
 	{
-		cmd_path = (run == 0) ? exec_path : data->args[0];
-		execve(cmd_path, data->args, data->env);
-		perror(cmd_path);
-		return (1);
+		if (run == 0)
+			exec_path = loc_exec(data->args[0], data->env);
+		else
+			exec_path = data->args[0];
+		execve(exec_path + run, data->args, data->env);
 	}
 	else if (pid < 0)
 	{
 		perror(data->av[0]);
-		free(exec_path);
 		return (1);
 	}
 	else
@@ -108,6 +109,5 @@ int exec_cmd(sh_dt *data)
 	}
 
 	data->status = state / 256;
-	free(exec_path);
 	return (1);
 }
