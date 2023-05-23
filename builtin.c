@@ -11,8 +11,8 @@ int (*_builtin(char *cmd))(sh_dt *data)
 		{ "env", handle_env },
 		{ "exit", handle_exit },
 		{ "setenv", handle_setenv },
-		/*{ "unsetenv", handle_unsetenv },
-		{ "cd", change_dir },*/
+		{ "unsetenv", handle_unsetenv },
+		{ "cd", change_dir },
 		{ NULL, NULL },
 	};
 

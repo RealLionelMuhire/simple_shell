@@ -1,6 +1,11 @@
 #include "shell.h"
 
 /**
+ * create_copy -  copies the name and value to a new string
+ * @name: string name
+ * @value: string value
+ *
+ * Return: pointer to newly string. NULL on failure
  */
 char *create_copy(char *name, char *value)
 {
@@ -9,7 +14,7 @@ char *create_copy(char *name, char *value)
 	char *new, *ptr;
 
 	new = malloc(sizeof(char) * (name_len + value_len + 2));
-	if(new == NULL)
+	if (new == NULL)
 		return (NULL);
 
 	ptr = new;
@@ -26,6 +31,10 @@ char *create_copy(char *name, char *value)
 }
 
 /**
+ * handle_setenv - sets environment variable and creates a new one
+ * @data: pointer to shell structure
+ *
+ * Return: 1 on success, 0 on failure
  */
 int handle_setenv(sh_dt *data)
 {
@@ -56,7 +65,58 @@ int handle_setenv(sh_dt *data)
 	env_new[i] = create_copy(name, value);
 	env_new[i + 1] = NULL;
 
-	data-> env = env_new;
+	data->env = env_new;
 
 	return (1);
 }
+
+/**
+ * handle_unsetenv - deletes an environment varibale
+ * @data: pointer to shell structure
+ *
+ * Return: 1 on success, -1 on failure
+ */
+int handle_unsetenv(sh_dt *data)
+{
+	char *name = data->args[1], **env = data->env;
+	int i, j = 0, count_env = 0;
+	char *env_var, env_name, **env_new;
+
+	if (name == NULL)
+	{
+		get_erro(data, -1);
+		return (-1);
+	}
+	for (i = 0; env[i]; i++)
+	{
+		env_var = _strdup(env[i]);
+		env_name = strtok(env_var, "=");
+		if (_strcmp(env_name, name) != 0)
+			count_env++;
+		free(env_var);
+	}
+	env_new = malloc(sizeof(char *) * (count_env + 1));
+	if (env_new == NULL)
+	{
+		get_error(data, -1);
+		return (1);
+	}
+	for (i = 0; env[i]; i++)
+	{
+		env_var = _strdup(env[i]);
+		nv_name = strtok(env_var, "=");
+		if (_strcmp(env_name, name) != 0)
+		{
+			env_new[j] = env[i];
+			j++;
+		}
+		else
+			free(env[i]);
+		free(env_var);
+	}
+	env_new[j] = NULL;
+	free(env);
+	env = nev_new;
+	return (1);
+}
+
