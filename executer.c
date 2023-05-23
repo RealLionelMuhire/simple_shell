@@ -1,15 +1,22 @@
 #include "shell.h"
 
+
 /**
+ * blt_cmd_h - handles builtins and commands
+ * @data: struct
+ * Return: builtin if it is passed otherwise commands
  */
 int blt_cmd_h(sh_dt *data)
 {
-	int(*bltn)(sh_dt *data) = _builtin(data->args[0]);
+	int (*bltn)(sh_dt *data) = _builtin(data->args[0]);
 
 	if (data->args[0] == NULL)
+	{
 		return (1);
+	}
 
 	return ((bltn != NULL) ? bltn(data) : exec_cmd(data));
+
 }
 
 /**
@@ -49,8 +56,6 @@ int check_exec(sh_dt *data)
 
 	if (stat(str + i, &st) == 0)
 		return (i);
-	printf("The command is %s and i is %i\n", str, i);
-        exit(90);
 
 	PRINT_ERR(": Permission denied\n");
 	return (-1);
@@ -63,22 +68,37 @@ int check_exec(sh_dt *data)
  */
 int exec_cmd(sh_dt *data)
 {
+	char p;
 	pid_t pid, wpid;
 	int state, run;
 	(void) wpid;
 
 	run = check_exec(data);
-	if (run == -1 || (run == 0 && check_error_cmd((p = _which(data->args[0], data->env)), data) == 1))
+	if (run == -1)
 		return (1);
+
+	if (run == 0)
+	{
+		p = _which(data->args[0], data->env);
+		if (err_check(p, data) == 1)
+		{
+			free(p);
+			return (1);
+		}
+	}
 
 
 	pid = fork();
 	if (pid == 0)
-		execve(data->args[0], data->args, data->env);
+	{
+		p = (run == 0) ? _which(data->args[0], data->env) : data->args[0];
+		execve(p + run, data->args, data->env);
+	}
 	else if (pid < 0)
 	{
-		perror("fork");
-		exit(1);
+		perror(data->av[0]);
+		free(p);
+		return (1);
 	}
 	else
 	{
@@ -88,6 +108,7 @@ int exec_cmd(sh_dt *data)
 	}
 
 	data->status = state / 256;
+	free(p);
 	return (1);
 }
 
