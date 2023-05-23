@@ -33,16 +33,21 @@ char *create_copy(char *name, char *value)
 /**
  * handle_setenv - sets environment variable and creates a new one
  * @data: pointer to shell structure
+ * @name: string name
+ * @value: string value
  *
  * Return: 1 on success, 0 on failure
  */
-int handle_setenv(sh_dt *data)
+int handle_setenv(sh_dt *data, const char *name, const  char *value)
 {
-	char *name = data->args[1];
-	char *value = data->args[2];
 	char **env = data->env;
-	int i, count_env = i + 2;
+	int i, count_env = 0;
 	char *env_var, *env_name, **env_new;
+
+	for (i = 0; env[i]; i++)
+	{
+		count_env++;
+	}
 
 	for (i = 0; env[i]; i++)
 	{
@@ -51,19 +56,21 @@ int handle_setenv(sh_dt *data)
 		if (_strcmp(env_name, name) == 0)
 		{
 			free(env[i]);
-			env[i] = create_copy(env_name, value);
+			env[i] = malloc(_strlen(name) + _strlen(value) + 2);
+			_sprintf(env[i], "%s=%s", name, value);
 			free(env_var);
 			return (1);
 		}
 		free(env_var);
 	}
 
-	env_new = _dp_realloc(env, i, sizeof(char *) * env_count);
+	env_new = _dp_realloc(env, (count_env + 2) * sizeof(char *));
 	if (env_new == NULL)
 		return (0);
 
-	env_new[i] = create_copy(name, value);
-	env_new[i + 1] = NULL;
+	env_new[count_env] = malloc(_strlen(name) + _strlen(value) + 2);
+	_sprintf(env_new[count_env], "%s=%s", name, value);
+	env_new[count_new + 1] = NULL;
 
 	data->env = env_new;
 
