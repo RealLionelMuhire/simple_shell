@@ -183,4 +183,7 @@ int handle_setenv(sh_dt *data);
 char *create_copy(char *name, char *value);
 int handle_unsetenv(sh_dt *data);
 
+/*errer_handler*/
+int get_err(sh_dt *data, int val_err);
+
 #endif
