@@ -62,16 +62,15 @@ int check_exec(sh_dt *data)
 }
 
 /**
- * exec_cmd - it executes and run cmd lines
+ * exec_cmd - executes and runs cmd lines
  * @data: shell containing data
  * Return: 1 on success
  */
 int exec_cmd(sh_dt *data)
 {
-	char p;
-	pid_t pid, wpid;
+	char *exec_path = NULL, *cmd_path;
+	pid_t pid;
 	int state, run;
-	(void) wpid;
 
 	run = check_exec(data);
 	if (run == -1)
@@ -79,36 +78,33 @@ int exec_cmd(sh_dt *data)
 
 	if (run == 0)
 	{
-		p = loc_exec(data->args[0], data->env);
-		if (err_check(p, data) == 1)
-		{
-			free(p);
+		exec_path = loc_exec(data->args[0], data->env);
+		if (exec_path == NULL)
 			return (1);
-		}
 	}
-
 
 	pid = fork();
 	if (pid == 0)
 	{
-		p = (run == 0) ? loc_exec(data->args[0], data->env) : data->args[0];
-		execve(p + run, data->args, data->env);
+		cmd_path = (run == 0) ? exec_path : data->args[0];
+		execve(cmd_path, data->args, data->env);
+		perror(cmd_path);
+		return (1);
 	}
 	else if (pid < 0)
 	{
 		perror(data->av[0]);
-		free(p);
+		free(exec_path);
 		return (1);
 	}
 	else
 	{
 		do {
-			wpid = waitpid(pid, &state, WUNTRACED);
+			waitpid(pid, &state, WUNTRACED);
 		} while (!WIFEXITED(state) && !WIFSIGNALED(state));
 	}
 
 	data->status = state / 256;
-	free(p);
+	free(exec_path);
 	return (1);
 }
-

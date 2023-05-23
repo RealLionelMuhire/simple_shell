@@ -103,7 +103,7 @@ int err_checker(char *ch, sh_dt *data)
  */
 char *error_env(sh_dt *data)
 {
-	char *counter_str = aux_itoa(data->count);
+	char *counter_str = _itoa(data->count);
 	char *msg = ": Unable to add/remove from environment\n";
 	int total_length = _strlen(data->av[0]) + _strlen(counter_str) +
 					   _strlen(data->args[0]) + _strlen(msg) + 4;
@@ -131,7 +131,7 @@ char *error_env(sh_dt *data)
  */
 char *err_p_126(sh_dt *data)
 {
-	char *counter_str = _itoa(data->counter);
+	char *counter_str = _itoa(data->count);
 	char *error_msg = malloc(sizeof(char) * (_strlen(data->av[0]) +
 				_strlen(counter_str) + _strlen(data->args[0]) + 24 + 1));
 	if (error_msg == NULL)
