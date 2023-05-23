@@ -68,7 +68,7 @@ void *_dp_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	if (new_size > old_size)
 	{
 		void **double_ptr = (void **)ptr;
-		*double_ptr = realloc(*double_ptr, new_size);
+		*double_ptr = _realloc(*double_ptr, new_size);
 		new_ptr = *double_ptr;
 	}
 	else
