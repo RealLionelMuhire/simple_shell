@@ -57,7 +57,7 @@ int check_exec(sh_dt *data)
 	if (stat(str + i, &st) == 0)
 		return (i);
 
-	PRINT_ERR(": Permission denied\n");
+	get_err(data, 127);
 	return (-1);
 }
 
