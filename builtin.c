@@ -103,29 +103,19 @@ int handle_env(sh_dt *data)
  */
 int handle_exit(sh_dt *data)
 {
-	unsigned int exit_stt;
-	int valid = 1, args_len = 0, is_large = 0;
+	unsigned int exit_status;
 
 	if (data->args[1] != NULL)
 	{
-		exit_stt = _atoi(data->args[1]);
-
-		valid = _isdigit(data->args[1]);
-		args_len = _strlen(data->args[1]);
-		is_large = exit_stt > (unsigned int)INT_MAX;
-
-		if (!valid || args_len > 10 || is_large)
-		{
-			write(STDERR_FILENO, "Invalid exit status\n", 20);
-			data->status = 2;
-			return (1);
-		}
-		data->status = exit_stt;
+		exit_status = atoi(data->args[1]);
+		data->status = exit_status;
+		data->exit_with_status = 1;
 	}
 	else
 	{
 		data->status = 0;
+		data->exit_with_status = 0;
 	}
 
-	return (0);
+	exit(data->status);
 }

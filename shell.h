@@ -48,6 +48,7 @@ typedef struct shell_data
 	char *pid;
 	int count;
 	int status;
+	int exit_with_status;
 } sh_dt;
 
 /**
