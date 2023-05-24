@@ -107,7 +107,7 @@ int handle_exit(sh_dt *data)
 
 	if (data->args[1] != NULL)
 	{
-		exit_status = atoi(data->args[1]);
+		exit_status = _atoi(data->args[1]);
 		data->status = exit_status;
 		data->exit_with_status = 1;
 	}
