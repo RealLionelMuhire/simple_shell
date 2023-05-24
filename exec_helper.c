@@ -29,9 +29,11 @@ int is_cur_dir(char *p, int *n)
 char *loc_exec(char *cmd, char **env)
 {
 	char *path, *path_copy, *token, *dir;
-	int command_length, i = 0;
+	int command_length, i;
 	struct stat st;
-
+	
+	printf("\nThe command passed in loc exec %s\n", cmd);
+	printf("\nThe command passed in loc exec %c\n", cmd[0]);
 	path = get_env("PATH", env);
 
 	if (path)
@@ -39,6 +41,7 @@ char *loc_exec(char *cmd, char **env)
 		path_copy = _strdup(path);
 		command_length = _strlen(cmd);
 		token = strtok(path_copy, ":");
+		i = 0;
 		while (token != NULL)
 		{
 			if (is_cur_dir(token, &i) && stat(cmd, &st) == 0)

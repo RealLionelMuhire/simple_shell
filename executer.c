@@ -81,19 +81,27 @@ int exec_cmd(sh_dt *data)
 
 	if (run == 0)
 	{
+		printf("The data->args 0 before loc_exec is %s\n", data->args[0]);
 		exec_path = loc_exec(data->args[0], data->env);
+		printf("The path to execute is %s\n", exec_path);
 		if (err_checker(exec_path, data) == 1)
 			return (1);
 	}
 
-	pid = fork();
+	printf("The data->args 0 before fork is %s\n", data->args[0]);
 
+	pid = fork();
+	printf("The data->args 0 after fork is %s\n", data->args[0]);
 	if (pid == 0)
 	{
 		if (run == 0)
+		{
 			exec_path = loc_exec(data->args[0], data->env);
+			printf("The path to execute is %s\n", exec_path + run);
+		}
 		else
 			exec_path = data->args[0];
+		printf("The data->args 0 is %s\n", data->args[0]);
 		execve(exec_path + run, data->args, data->env);
 	}
 	else if (pid < 0)
