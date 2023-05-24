@@ -94,7 +94,7 @@ char *_strdup(char *str)
 		return (NULL);
 	}
 
-	strcpy(n_str, str);
+	_strcpy(n_str, str);
 
 	return (n_str);
 }

@@ -38,16 +38,21 @@ int compare_var(const char *env_var, const char *name)
 {
 	int i;
 
-	for (i = 0; env_var[i] != '='; i++)
+	for (i = 0; env_var[i] != '=' && name[i] != '\0'; i++)
 	{
 		if (env_var[i] != name[i])
 		{
 			return (0);
 		}
 	}
-	return (1);
-}
 
+	if (env_var[i] == '=' && name[i] == '\0')
+	{
+		return (1);
+	}
+
+	return (0);
+}
 /**
  * get_env - retrievesvalue of an environment variable
  * @name: name of environment variable

@@ -34,10 +34,10 @@ char *_itoa(unsigned int n)
 	{
 		s = malloc(2);
 		if (!s)
-			return NULL;
+			return (NULL);
 		s[0] = '0';
 		s[1] = '\0';
-		return s;
+		return (s);
 	}
 	len = _intlen(n);
 	s = malloc(len + 1);

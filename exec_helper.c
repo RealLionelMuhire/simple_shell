@@ -20,55 +20,57 @@ int is_cur_dir(char *p, int *n)
 	return (0);
 }
 
+
 /**
- * loc_exec - locate the executable commands
- * @cmd: command to locate
- * @env: environment variable
- * Return: command if is found otherwise NULL
+ * loc_exec - locates a command
+ * @cmd: command name
+ * @env: environment variables
+ *
+ * Return: location of the command.
  */
 char *loc_exec(char *cmd, char **env)
 {
-	char *path, *path_copy, *token, *dir;
-	int command_length, i;
+	char *path, *ptr_path, *token_path, *dir;
+	int len_dir, len_cmd, i;
 	struct stat st;
-	
-	printf("\nThe command passed in loc exec %s\n", cmd);
-	printf("\nThe command passed in loc exec %c\n", cmd[0]);
-	path = get_env("PATH", env);
 
+	path = get_env("PATH", env);
 	if (path)
 	{
-		path_copy = _strdup(path);
-		command_length = _strlen(cmd);
-		token = strtok(path_copy, ":");
+		ptr_path = _strdup(path);
+		len_cmd = _strlen(cmd);
+		token_path = strtok(ptr_path, ":");
 		i = 0;
-		while (token != NULL)
+		while (token_path != NULL)
 		{
-			if (is_cur_dir(token, &i) && stat(cmd, &st) == 0)
+			if (is_cur_dir(path, &i))
 			{
-				free(path_copy);
-				return (cmd);
+				if (stat(cmd, &st) == 0)
+					return (_strdup(cmd));
 			}
-			dir = malloc(_strlen(token) + command_length + 2);
-			_sprintf(dir, "%s/%s", token, cmd);
+			len_dir = _strlen(token_path);
+			dir = malloc(len_dir + len_cmd + 2);
+			_sprintf(dir, "%s/%s", token_path, cmd);
+
 			if (stat(dir, &st) == 0)
 			{
-				free(path_copy);
+				free(ptr_path);
 				return (dir);
 			}
 			free(dir);
-			token = strtok(NULL, ":");
+			token_path = strtok(NULL, ":");
 		}
-		if (cmd[0] == '/' && stat(cmd, &st) == 0)
-		{
-			free(path_copy);
-			return (cmd);
-		}
-		free(path_copy);
+		free(ptr_path);
+		if (stat(cmd, &st) == 0)
+			return (_strdup(cmd));
+
+		return (NULL);
 	}
+	if (cmd[0] == '/')
+		if (stat(cmd, &st) == 0)
+			return (_strdup(cmd));
 	return (NULL);
 }
-
 /**
  * err_checker - checks whether the user has permission on access
  * @ch: final destination dir
