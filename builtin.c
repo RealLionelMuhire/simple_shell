@@ -18,14 +18,13 @@ int (*_builtin(char *cmd))(sh_dt *)
 
 	int i;
 
-	for (i = 0; builtins[i].cmd != NULL; i++)
+	for (i = 0; builtins[i].cmd; i++)
 	{
 		if  (_strcmp(builtins[i].cmd, cmd) == 0)
-		{
-			return (builtins[i].f);
-		}
+			break;
 	}
-	return (NULL);
+
+	return (builtins[i].f);
 }
 
 /**

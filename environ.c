@@ -9,23 +9,17 @@
  */
 char *create_copy(char *name, char *value)
 {
-	int name_len = _strlen(name);
-	int value_len = _strlen(value);
-	char *new, *ptr;
+	size_t name_len = _strlen(name);
+	size_t value_len = _strlen(value);
+	char *new;
 
 	new = malloc(sizeof(char) * (name_len + value_len + 2));
 	if (new == NULL)
 		return (NULL);
 
-	ptr = new;
-	while (*name)
-		*ptr++ = *name++;
-
-	*ptr++ = '=';
-	while (*value)
-		*ptr++ = *value++;
-
-	*ptr = '\0';
+	_strcpy(new, name);
+	new[name_len] = '=';
+	_strcpy(new + name_len + 1, value);
 
 	return (new);
 }
@@ -38,11 +32,11 @@ char *create_copy(char *name, char *value)
  */
 void set_env(char *name, char *value, sh_dt *data)
 {
-	int i;
+	int i, j;
 	size_t env_size;
 	char *var_env, *name_env, **new_env;
 
-	for (i = 0; data->env[i]; i++)
+	for (i = 0; data->env[i] != NULL; i++)
 	{
 		var_env = strdup(data->env[i]);
 		name_env = strtok(var_env, "=");
@@ -55,13 +49,18 @@ void set_env(char *name, char *value, sh_dt *data)
 		}
 		free(var_env);
 	}
-	env_size = sizeof(char *) * (i + 2);
-	new_env = _dp_realloc(data->env, env_size, env_size);
+	env_size = (i + 2) * sizeof(char *);
+	new_env = malloc(env_size);
 	if (new_env == NULL)
 		return;
-	data->env = new_env;
+	for (j = 0; j < i; j++)
+		new_env[j] = data->env[j];
+
 	data->env[i] = create_copy(name, value);
 	data->env[i + 1] = NULL;
+
+	free(data->env);
+	data->env = new_env;
 }
 
 /**
@@ -102,7 +101,7 @@ int handle_unsetenv(sh_dt *data)
 		get_err(data, -1);
 		return (-1);
 	}
-	for (i = 0; env[i]; i++)
+	for (i = 0; env[i] != NULL; i++)
 	{
 		env_var = _strdup(env[i]);
 		env_name = strtok(env_var, "=");
@@ -116,7 +115,7 @@ int handle_unsetenv(sh_dt *data)
 		get_err(data, -1);
 		return (-1);
 	}
-	for (i = 0; env[i]; i++)
+	for (i = 0; env[i] != NULL; i++)
 	{
 		env_var = _strdup(env[i]);
 		env_name = strtok(env_var, "=");

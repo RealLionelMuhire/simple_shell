@@ -129,6 +129,7 @@ char *_strcat(char *dest, char *src);
 int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strtok(char *str, char *delim);
 int _atoi(char *s);
+char *_strcpy(char *dest, char *src);
 
 /*main_helpers*/
 void sigHandler(int sigNum);
@@ -175,7 +176,7 @@ int err_checker(char *ch, sh_dt *data);
 char *err_p_126(sh_dt *data);
 
 /*bultins and envirnonment*/
-int (*_builtin(char *cmd))(sh_dt *data);
+int (*_builtin(char *cmd))(sh_dt *);
 int compare_var(const char *env_var, const char *name);
 char *get_env(char *name, char **env);
 int handle_env(sh_dt *data);

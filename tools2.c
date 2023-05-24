@@ -30,20 +30,30 @@ char *_itoa(unsigned int n)
 	int len = 0, i = 0;
 	char *s;
 
+	if (n == 0)
+	{
+		s = malloc(2);
+		if (!s)
+			return NULL;
+		s[0] = '0';
+		s[1] = '\0';
+		return s;
+	}
 	len = _intlen(n);
 	s = malloc(len + 1);
 	if (!s)
 		return (NULL);
-	*s = '\0';
-	while (n / 10)
+
+	while (n > 0)
 	{
 		s[i] = (n % 10) + '0';
 		n /= 10;
 		i++;
 	}
-	s[i] = (n % 10) + '0';
+	s[i] = '\0';
+
 	arr_rev(s, len);
-	s[i + 1] = '\0';
+
 	return (s);
 }
 

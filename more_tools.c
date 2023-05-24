@@ -147,7 +147,7 @@ char *replace_v(char *str, sh_dt *data)
 		idx = idx->next;
 	}
 
-	new_len += _strlen(str);
+	new_len += _strlen(str) - (idx->var_len * 2);
 
 	n_str = malloc(new_len + 1);
 	n_str[new_len] = '\0';

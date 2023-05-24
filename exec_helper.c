@@ -29,7 +29,7 @@ int is_cur_dir(char *p, int *n)
 char *loc_exec(char *cmd, char **env)
 {
 	char *path, *path_copy, *token, *dir;
-	int dir_length, command_length, i = 0;
+	int command_length, i = 0;
 	struct stat st;
 
 	path = get_env("PATH", env);
@@ -46,8 +46,7 @@ char *loc_exec(char *cmd, char **env)
 				free(path_copy);
 				return (cmd);
 			}
-			dir_length = _strlen(token);
-			dir = malloc(dir_length + command_length + 2);
+			dir = malloc(_strlen(token) + command_length + 2);
 			_sprintf(dir, "%s/%s", token, cmd);
 			if (stat(dir, &st) == 0)
 			{
