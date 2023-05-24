@@ -117,5 +117,10 @@ int handle_exit(sh_dt *data)
 		}
 		data->status = exit_stt;
 	}
+	else
+	{
+		data->status = 0;
+	}
+
 	return (0);
 }

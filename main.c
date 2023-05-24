@@ -34,8 +34,8 @@ int main(int argc, char **av)
 			}
 			cmd = replace_v(cmd, &data);
 			cmd_tok(&data, cmd);
-			data.count += 1;
 			free(cmd);
+			data.count += 1;
 		}
 		else
 		{

@@ -75,7 +75,9 @@ int handle_setenv(sh_dt *data)
 
 	if (args[1] == NULL || args[2] == NULL)
 	{
-		get_err(data, -1);
+		write(STDERR_FILENO, "Missing arguments for setenv\n", 29);
+		/*get_err(data, -1);*/
+		data->status = 2;
 		return (1);
 	}
 
@@ -133,4 +135,3 @@ int handle_unsetenv(sh_dt *data)
 	data->env = env_new;
 	return (1);
 }
-
