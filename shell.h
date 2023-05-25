@@ -35,6 +35,7 @@ extern char **environ;
  * @pid: child process ID
  * @count: counts the inputed commands
  * @status: the final statuts of the last shell run
+ * @exit_with_status: exit_with_status
  *
  * Descprition: this structure contains all required data and variables
  * to run and manage the simple shell program.
