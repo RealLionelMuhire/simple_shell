@@ -39,7 +39,7 @@ void set_env(char *name, char *value, sh_dt *data)
 	for (i = 0; data->env[i] != NULL; i++)
 	{
 		var_env = _strdup(data->env[i]);
-		name_env = strtok(var_env, "=");
+		name_env = _strtok(var_env, "=");
 		if (_strcmp(name_env, name) == 0)
 		{
 			free(data->env[i]);
@@ -106,7 +106,7 @@ int handle_unsetenv(sh_dt *data)
 	for (i = 0; env[i] != NULL; i++)
 	{
 		env_var = _strdup(env[i]);
-		env_name = strtok(env_var, "=");
+		env_name = _strtok(env_var, "=");
 		if (_strcmp(env_name, name) != 0)
 			count_env++;
 		free(env_var);
@@ -120,7 +120,7 @@ int handle_unsetenv(sh_dt *data)
 	for (i = 0; env[i] != NULL; i++)
 	{
 		env_var = _strdup(env[i]);
-		env_name = strtok(env_var, "=");
+		env_name = _strtok(env_var, "=");
 		if (_strcmp(env_name, name) != 0)
 		{
 			env_new[j] = env[i];

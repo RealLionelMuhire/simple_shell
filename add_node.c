@@ -123,10 +123,10 @@ void add_sep_cmd_n(l_sep **h_s, cmd_st **h_c, char *str)
 		}
 	}
 
-	tok = strtok(str, ";|&");
+	tok = _strtok(str, ";|&");
 	while (tok)
 	{
-		add_cmd_st_n(h_c, ch_repl(strdup(tok), 1));
-		tok = strtok(NULL, ";|&");
+		add_cmd_st_n(h_c, ch_repl(_strdup(tok), 1));
+		tok = _strtok(NULL, ";|&");
 	}
 }

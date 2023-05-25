@@ -13,7 +13,7 @@ void check_env(l_v **h, char *str, sh_dt *data)
 	char *env_name;
 	int len, i;
 
-	env_name = strtok(str + 1, " \t\n;");
+	env_name = _strtok(str + 1, " \t\n;");
 	if (!env_name)
 		return;
 
