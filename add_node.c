@@ -84,6 +84,12 @@ cmd_st *add_cmd_st_n(cmd_st **h, char *cmd)
 	if (!new)
 		return (NULL);
 	new->c_line = _strdup(cmd);
+	if (!new->c_line)
+	{
+		free(new->c_line);
+		free(new);
+		return (NULL);
+	}
 	new->next = NULL;
 
 	if (*h == NULL)
@@ -95,6 +101,7 @@ cmd_st *add_cmd_st_n(cmd_st **h, char *cmd)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
+
 	return (*h);
 }
 
@@ -123,10 +130,10 @@ void add_sep_cmd_n(l_sep **h_s, cmd_st **h_c, char *str)
 		}
 	}
 
-	tok = _strtok(str, ";|&");
+	tok = strtok(str, ";|&");
 	while (tok)
 	{
 		add_cmd_st_n(h_c, ch_repl(_strdup(tok), 1));
-		tok = _strtok(NULL, ";|&");
+		tok = strtok(NULL, ";|&");
 	}
 }
