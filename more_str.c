@@ -1,41 +1,78 @@
 #include "shell.h"
 
 /**
- * _strtok - tokenizes a string
- * @str: string to be tokenized
- * @delim: delimiter character
+ * cmp_chars - compare chars of strings
+ * @str: input string.
+ * @delim: delimiter.
  *
- * Return: pointer to the next token
+ * Return: 1 if are equals, 0 if not.
+ */
+int cmp_chars(char str[], const char *delim)
+{
+	unsigned int i, j, k;
+
+	for (i = 0, k = 0; str[i]; i++)
+	{
+		for (j = 0; delim[j]; j++)
+		{
+			if (str[i] == delim[j])
+			{
+				k++;
+				break;
+			}
+		}
+	}
+	if (i == k)
+		return (1);
+	return (0);
+}
+
+/**
+ * _strtok - splits a string by some delimiter.
+ * @str: input string.
+ * @delim: delimiter.
+ *
+ * Return: string splited.
  */
 char *_strtok(char *str, char *delim)
 {
-	static char *last = "";
-	char *token, *ptr;
-
-	if (str == NULL && last == NULL)
-		return (NULL);
+	static char *splitted, *str_end;
+	char *str_start;
+	unsigned int i, bool;
 
 	if (str != NULL)
-		ptr = str;
-	else
-		ptr = last;
-
-	while (*ptr && _strchr(delim, *ptr))
-		ptr++;
-	if (*ptr == '\0')
+	{
+		if (cmp_chars(str, delim))
+			return (NULL);
+		splitted = str;
+		i = _strlen(str);
+		str_end = &str[i];
+	}
+	str_start = splitted;
+	if (str_start == str_end)
 		return (NULL);
 
-	token = ptr;
-	while (*ptr && _strchr(delim, *ptr))
-		ptr++;
-	if (*ptr == '\0')
-		last = "";
-	else
+	for (bool = 0; *splitted; splitted++)
 	{
-		*ptr = '\0';
-		last = ptr + 1;
+		if (splitted != str_start)
+			if (*splitted && *(splitted - 1) == '\0')
+				break;
+		for (i = 0; delim[i]; i++)
+		{
+			if (*splitted == delim[i])
+			{
+				*splitted = '\0';
+				if (splitted == str_start)
+					str_start++;
+				break;
+			}
+		}
+		if (bool == 0 && *splitted)
+			bool = 1;
 	}
-	return (token);
+	if (bool == 0)
+		return (NULL);
+	return (str_start);
 }
 
 /**
