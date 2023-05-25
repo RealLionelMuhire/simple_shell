@@ -38,7 +38,7 @@ void set_env(char *name, char *value, sh_dt *data)
 
 	for (i = 0; data->env[i] != NULL; i++)
 	{
-		var_env = strdup(data->env[i]);
+		var_env = _strdup(data->env[i]);
 		name_env = strtok(var_env, "=");
 		if (_strcmp(name_env, name) == 0)
 		{
