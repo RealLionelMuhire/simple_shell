@@ -42,11 +42,6 @@ int main(int argc, char **av)
 			free(cmd);
 			break;
 		}
-		if (_strcmp(data.args[0], "exit") == 0)
-		{
-			handle_exit(&data);
-			continue;
-		}
 	}
 
 	free_d(&data);
