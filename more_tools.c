@@ -76,45 +76,52 @@ int dollar_sign_h(l_v **h, char *str, char *stat, sh_dt *data)
 }
 
 /**
- * str_replace - it takes str and replaced them with variables
- * @head: head of ll
- * @s: input str
- * @n_s:new string
- * @n_l: new length
+ * str_replace - replace variables in the input string with their corresponding values
+ * @head: head of the linked list
+ * @input_str: input string to be replaced
+ * @new_str: new string to store the replaced input
+ * @new_len: length of the new string
  *
- * Return: replaced str
+ * Return: the replaced input string
  */
-char *str_replace(l_v **head, char *s, char *n_s, int n_l)
+char *str_replace(l_v **head, char *input_str, char *new_str, int new_len)
 {
 	l_v *current = *head;
 	int i, j, k;
 
-	for (i = j = 0; i < n_l; i++, j++)
+	for (i = j = 0; i < new_len; i++)
 	{
-		if (s[j] == '$')
+		if (input_str[j] == '$')
 		{
 			if (current && current->val_len > 0)
 			{
-				for (k = 0; k < current->val_len && i < n_l; k++)
-				{
-					n_s[i] = current->var_val[k];
-					i++;
-				}
-				j += current->var_len - 1;
-				current = current->next;
+				for (k = 0; k < current->val_len; k++)
+					new_str[i++] = current->var_val[k];
+				j += current->var_len;
+				i--;
+			}
+			else if (current && current->var_len > 0)
+			{
+				j += current->var_len;
+				i--;
 			}
 			else
 			{
-				n_s[i] = s[j];
+				new_str[i] = input_str[j];
+				j++;
 			}
+			current = current->next;
 		}
 		else
 		{
-			n_s[i] = s[j];
+			new_str[i] = input_str[j];
+			j++;
 		}
 	}
-	return (n_s);
+
+	return new_str;
 }
+
 
 /**
  * replace_v - replace variables in the input string with
@@ -141,7 +148,7 @@ char *replace_v(char *str, sh_dt *data)
 
 	idx = head;
 
-	while (idx)
+	while (idx->next)
 	{
 		new_len += idx->val_len - idx->var_len;
 		idx = idx->next;
@@ -152,7 +159,7 @@ char *replace_v(char *str, sh_dt *data)
 	n_str = malloc(new_len + 1);
 	n_str[new_len] = '\0';
 
-	str_replace(&head, str, n_str, new_len);
+	n_str = str_replace(&head, str, n_str, new_len);
 
 	free(str);
 	free(state);

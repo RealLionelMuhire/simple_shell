@@ -48,31 +48,19 @@ char *hash_hand(char *str)
 {
 	int i = 0, j = 0;
 
-	while (*(str + i))
+	while (str[i])
 	{
-		if (str[i] == '#')
+		if (str[i] == '#' && (i == 0 || str[i - 1] == ' ' || str[i - 1] == '\t' || str[i - 1] == ';'))
 		{
-			if (i == 0)
-			{
-				free(str);
-				return (NULL);
-			}
-
-			if (str[i - 1] == ' ' || str[i - 1] == '\t' ||
-				str[i - 1] == ';')
-			{
-				j = i;
-			}
+			str[i] = '\0';
+			break;
 		}
 		i++;
 	}
 
 	if (j)
-	{
 		str = _realloc(str, i, j + 1);
-	}
-	return (str);
-
+	return str;
 }
 
 /**
