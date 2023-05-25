@@ -83,7 +83,7 @@ cmd_st *add_cmd_st_n(cmd_st **h, char *cmd)
 
 	if (!new)
 		return (NULL);
-	new->c_line = strdup(cmd);
+	new->c_line = _strdup(cmd);
 	new->next = NULL;
 
 	if (*h == NULL)

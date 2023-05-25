@@ -66,7 +66,7 @@ char *err_cd(sh_dt *data)
 	char *msg = (data->args[1][0] == '-') ?
 		": Illegal option " : ": can't cd to ";
 	int total_len = _strlen(data->av[0]) + _strlen(data->args[0]) +
-		_strlen(count_str) + _strlen(msg) + strlen(data->args[1]) + 5;
+		_strlen(count_str) + _strlen(msg) + _strlen(data->args[1]) + 5;
 
 	error_msg = malloc(sizeof(char) * (total_len + 1));
 	if (error_msg == NULL)
