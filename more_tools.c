@@ -95,7 +95,7 @@ char *str_replace(l_v **head, char *s, char *n_s, int n_l)
 		{
 			if (current && current->val_len > 0)
 			{
-				for (k = 0; k < current->val_len; k++)
+				for (k = 0; k < current->val_len && i < n_l; k++)
 				{
 					n_s[i] = current->var_val[k];
 					i++;
