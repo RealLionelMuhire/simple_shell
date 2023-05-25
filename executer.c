@@ -95,6 +95,7 @@ int exec_cmd(sh_dt *data)
 		}
 		else
 			exec_path = data->args[0];
+		printf("\ncomand to execute is %s\n", exec_path);
 		execve(exec_path + run, data->args, data->env);
 	}
 	else if (pid < 0)
