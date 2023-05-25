@@ -6,11 +6,11 @@
  */
 void cd_to_cd(sh_dt *data)
 {
-	char wd[PATH_MAX];
-	char *dir, *cp_wd, *cp_to_wd;
+	char wd[PATH_MAX], *dir, *cp_wd, *cp_to_wd;
 
 	getcwd(wd, sizeof(wd));
-	cp_wd = _strdup(wd);
+	cp_wd = malloc(strlen(wd) + 1);
+	_strcpy(cp_wd, wd);
 	set_env("OLDPWD", cp_wd, data);
 
 	dir = data->args[1];
@@ -92,7 +92,6 @@ void cd_to_sd(sh_dt *data)
 	set_env("OLDPWD", oldwd, data);
 	set_env("PWD", getcwd(NULL, 0), data);
 	free(oldwd);
-	free(getcwd(NULL, 0));
 	data->status = 0;
 }
 
@@ -163,20 +162,34 @@ void cd_to_home(sh_dt *data)
  */
 int change_dir(sh_dt *data)
 {
-	char *wd = data->args[1];
+	char *dir;
+	int ch1, ch2, ch3;
 
-	if (wd == NULL || _strcmp(wd, ".") == 0 || _strcmp(wd, "..") == 0
-			|| _strcmp(wd, "~") == 0)
+	dir = data->args[1];
+	if (dir != NULL)
 	{
-		cd_to_cd(data);
+		ch1 = _strcmp("$HOME", dir);
+		ch2 = _strcmp("~", dir);
+		ch3 = _strcmp("--", dir);
 	}
-	else if (_strcmp(wd, "-") == 0 || _strcmp(wd, "~") == 0)
+	if (dir == NULL || !ch1 || !ch2 || !ch3)
+	{
+		cd_to_home(data);
+		return (1);
+	}
+	if (_strcmp("-", dir) == 0)
 	{
 		cd_to_pd(data);
+		return (1);
 	}
-	else
+
+	if (_strcmp(".", dir) == 0 || _strcmp("..", dir) == 0)
 	{
 		cd_to_sd(data);
+		return (1);
 	}
+	cd_to_cd(data);
+
 	return (1);
 }
+

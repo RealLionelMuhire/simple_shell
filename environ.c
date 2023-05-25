@@ -99,10 +99,7 @@ int handle_unsetenv(sh_dt *data)
 	char *env_var, *env_name, **env_new;
 
 	if (name == NULL)
-	{
-		get_err(data, -1);
 		return (-1);
-	}
 	for (i = 0; env[i] != NULL; i++)
 	{
 		env_var = _strdup(env[i]);
@@ -114,7 +111,6 @@ int handle_unsetenv(sh_dt *data)
 	env_new = malloc(sizeof(char *) * (count_env + 1));
 	if (env_new == NULL)
 	{
-		get_err(data, -1);
 		return (-1);
 	}
 	for (i = 0; env[i] != NULL; i++)
