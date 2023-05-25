@@ -93,12 +93,16 @@ int free_d(sh_dt *data)
 {
 	int i = 0;
 
+	if (!data)
+		return (0);
+
 	for (; data->env[i]; i++)
 	{
 		free(data->env[i]);
 	}
 	free(data->env);
 	free(data->pid);
+	_memset(data, 0, sizeof(sh_dt));
 
 	return (0);
 }

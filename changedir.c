@@ -27,10 +27,10 @@ void cd_to_cd(sh_dt *data)
 	}
 	cp_to_wd = cp_wd;
 	arr_rev(cp_to_wd, _strlen(cp_to_wd));
-	cp_to_wd = _strtok(cp_to_wd, "/");
+	cp_to_wd = strtok(cp_to_wd, "/");
 	if (cp_to_wd != NULL)
 	{
-		cp_to_wd = _strtok(NULL, "\0");
+		cp_to_wd = strtok(NULL, "\0");
 		if (cp_to_wd != NULL)
 			arr_rev(cp_to_wd, _strlen(cp_to_wd));
 	}
