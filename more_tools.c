@@ -76,7 +76,8 @@ int dollar_sign_h(l_v **h, char *str, char *stat, sh_dt *data)
 }
 
 /**
- * str_replace - replace variables in the input string with their corresponding values
+ * str_replace - replace variables in the input string with
+ * --------------their corresponding values
  * @head: head of the linked list
  * @input_str: input string to be replaced
  * @new_str: new string to store the replaced input
@@ -119,7 +120,7 @@ char *str_replace(l_v **head, char *input_str, char *new_str, int new_len)
 		}
 	}
 
-	return new_str;
+	return (new_str);
 }
 
 

@@ -55,7 +55,8 @@ char *hash_hand(char *str)
 
 	while (str[i])
 	{
-		if (str[i] == '#' && (i == 0 || str[i - 1] == ' ' || str[i - 1] == '\t' || str[i - 1] == ';'))
+		if (str[i] == '#' && (i == 0 || str[i - 1] == ' '
+					|| str[i - 1] == '\t' || str[i - 1] == ';'))
 		{
 			str[i] = '\0';
 			break;
@@ -65,7 +66,7 @@ char *hash_hand(char *str)
 
 	if (j)
 		str = _realloc(str, i, j + 1);
-	return str;
+	return (str);
 }
 
 /**
