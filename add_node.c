@@ -83,10 +83,10 @@ cmd_st *add_cmd_st_n(cmd_st **h, char *cmd)
 
 	if (!new)
 		return (NULL);
+
 	new->c_line = _strdup(cmd);
 	if (!new->c_line)
 	{
-		free(new->c_line);
 		free(new);
 		return (NULL);
 	}

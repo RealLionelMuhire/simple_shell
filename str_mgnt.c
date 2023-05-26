@@ -80,23 +80,16 @@ int _strcmp(char *s1, char *s2)
  */
 char *_strdup(char *str)
 {
-	char *n_str;
+	char *new;
+	size_t len;
 
-	if (str == NULL)
-	{
+	len = _strlen(str);
+	new = malloc(sizeof(char) * (len + 1));
+	if (new == NULL)
 		return (NULL);
-	}
+	_memcpy(new, str, len + 1);
+	return (new);
 
-	n_str = (char *)malloc(_strlen(str) + 1);
-
-	if (n_str == NULL)
-	{
-		return (NULL);
-	}
-
-	_strcpy(n_str, str);
-
-	return (n_str);
 }
 
 /**
