@@ -125,7 +125,7 @@ char **tok_line(char *str)
 		tokens[i] = token;
 	}
 
-	return tokens;
+	return (tokens);
 }
 
 /**
