@@ -203,5 +203,7 @@ void cd_to_sd(sh_dt *data);
 void cd_to_pd(sh_dt *data);
 void cd_to_home(sh_dt *data);
 int change_dir(sh_dt *data);
+int handle_input(sh_dt *data, char *cmd);
+void cleanup(sh_dt *data);
 
 #endif

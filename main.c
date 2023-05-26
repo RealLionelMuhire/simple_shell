@@ -22,20 +22,8 @@ int main(int argc, char **av)
 		cmd = get_input(&ret);
 		if (ret != -1)
 		{
-			cmd = hash_hand(cmd);
-			if (cmd == NULL)
-				continue;
-
-			if (err_synt_checker(&data, cmd) == 1)
-			{
-				data.status = 2;
-				free(cmd);
-				continue;
-			}
-			cmd = replace_v(cmd, &data);
-			cmd_tok(&data, cmd);
-			free(cmd);
-			data.count += 1;
+			if (handle_input(&data, cmd) == 0)
+				break;
 		}
 		else
 		{
@@ -44,7 +32,7 @@ int main(int argc, char **av)
 		}
 	}
 
-	free_d(&data);
+	cleanup(&data);
 	if (data.status < 0)
 		return (255);
 	return (data.status);
