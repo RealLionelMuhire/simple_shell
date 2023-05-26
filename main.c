@@ -40,12 +40,13 @@ int main(int argc, char **av)
 		else
 		{
 			free(cmd);
-			break;
+			handle_exit(&data);
+			/*break;*/
 		}
 	}
 
-	free_d(&data);
+	/*free_d(&data);
 	if (data.status < 0)
-		return (255);
+		return (255);*/
 	return (data.status);
 }
