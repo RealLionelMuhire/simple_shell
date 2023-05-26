@@ -39,7 +39,8 @@ int main(int argc, char **av)
 		}
 		else
 		{
-			free(cmd);
+			handle_exit(&data);
+			/*free(cmd);*/
 			break;
 		}
 	}

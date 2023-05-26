@@ -126,6 +126,7 @@ int handle_exit(sh_dt *data)
 		data->status = 0;
 		data->exit_with_status = 0;
 	}
+	free_d(data);
 
 	exit(data->status);
 }
