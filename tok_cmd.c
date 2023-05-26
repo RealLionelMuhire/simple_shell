@@ -86,44 +86,46 @@ void next_cmd(l_sep **s_ls, cmd_st **cmd, sh_dt *data)
 
 
 /**
- * tok_line - tokenise the string inputted
- * @str: string to tokeninse
- * Return: tokens
+ * tok_line - Tokenizes a string into an array of tokens
+ * @str: The string to tokenize
+ *
+ * Return: Array of tokens
  */
-
 char **tok_line(char *str)
 {
-	size_t i = 0, size = TOK_SIZE;
-	char **toks = malloc(sizeof(char *) * TOK_SIZE), *tok;
+	size_t bsize;
+	size_t i;
+	char **tokens;
+	char *token;
 
-	if (!toks)
+	bsize = TOK_SIZE;
+	tokens = malloc(sizeof(char *) * bsize);
+	if (tokens == NULL)
 	{
-		PRINT_ERR(": allocation error\n");
-		free(toks);
+		write(STDERR_FILENO, ": allocation error\n", 18);
 		exit(EXIT_FAILURE);
 	}
 
-	tok = strtok(str, DELIMITER);
+	token = strtok(str, DELIMITER);
+	tokens[0] = token;
 
-	while (tok)
+	for (i = 1; token != NULL; i++)
 	{
-		toks[i++] = tok;
-
-		if (i == size)
+		if (i == bsize)
 		{
-			size += TOK_SIZE;
-			toks = _dp_realloc(toks, i, sizeof(char *) * size);
-
-			if (!toks)
+			bsize += TOK_SIZE;
+			tokens = realloc(tokens, sizeof(char *) * bsize);
+			if (tokens == NULL)
 			{
-				PRINT_ERR(": allocation error\n");
-				free(toks);
+				write(STDERR_FILENO, ": allocation error\n", 18);
 				exit(EXIT_FAILURE);
 			}
 		}
-		tok = strtok(NULL, DELIMITER);
+		token = strtok(NULL, DELIMITER);
+		tokens[i] = token;
 	}
-	return (toks);
+
+	return tokens;
 }
 
 /**
