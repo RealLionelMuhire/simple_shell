@@ -99,6 +99,7 @@ char **tok_line(char *str)
 	if (!toks)
 	{
 		PRINT_ERR(": allocation error\n");
+		free(toks);
 		exit(EXIT_FAILURE);
 	}
 
@@ -113,9 +114,10 @@ char **tok_line(char *str)
 			size += TOK_SIZE;
 			toks = _dp_realloc(toks, i, sizeof(char *) * size);
 
-			if (toks)
+			if (!toks)
 			{
 				PRINT_ERR(": allocation error\n");
+				free(toks);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -160,8 +162,8 @@ int cmd_tok(sh_dt *data, char *str)
 		if (l_c)
 			l_c = l_c->next;
 	}
-	free_l_sep(&l_s);
-	free_cmd_st(&l_c);
+	free_l_sep(&h_s);
+	free_cmd_st(&h_c);
 
 	return (n == 0 ? 0 : 1);
 }
