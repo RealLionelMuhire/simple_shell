@@ -108,8 +108,18 @@ int handle_exit(sh_dt *data)
 	if (data->args[1] != NULL)
 	{
 		exit_status = _atoi(data->args[1]);
-		data->status = exit_status;
-		data->exit_with_status = 1;
+		if (exit_status < 0 || exit_status > 255)
+		{
+			write(STDERR_FILENO, "./hsh: 1: exit: Illegal number: ", 31);
+			write(STDERR_FILENO, data->args[1], _strlen(data->args[1]));
+			write(STDERR_FILENO, "\n", 1);
+			data->status = 2;
+		}
+		else
+		{
+			data->status = exit_status;
+			data->exit_with_status = 1;
+		}
 	}
 	else
 	{

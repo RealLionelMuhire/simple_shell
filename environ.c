@@ -115,7 +115,7 @@ int handle_unsetenv(sh_dt *data)
 		}
 		free(var_env);
 	}
-	if (k == -1)
+	if (l == -1)
 	{
 		get_err(data, -1);
 		return (1);
