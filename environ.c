@@ -52,7 +52,9 @@ void set_env(char *name, char *value, sh_dt *data)
 	env_size = (i + 2) * sizeof(char *);
 	new_env = malloc(env_size);
 	if (new_env == NULL)
+	{
 		return;
+	}
 	for (j = 0; j < i; j++)
 		new_env[j] = data->env[j];
 
@@ -94,40 +96,42 @@ int handle_setenv(sh_dt *data)
  */
 int handle_unsetenv(sh_dt *data)
 {
-	char *name = data->args[1], **env = data->env;
-	int i, j = 0, count_env = 0;
-	char *env_var, *env_name, **env_new;
+	char *var_env, *name_env, **new_env;
+	int i, j, l;
 
-	if (name == NULL)
-		return (-1);
-	for (i = 0; env[i] != NULL; i++)
+	if (data->args[1] == NULL)
 	{
-		env_var = _strdup(env[i]);
-		env_name = strtok(env_var, "=");
-		if (_strcmp(env_name, name) != 0)
-			count_env++;
-		free(env_var);
+		get_err(data, -1);
+		return (1);
 	}
-	env_new = malloc(sizeof(char *) * (count_env + 1));
-	if (env_new == NULL)
+	l = -1;
+	for (i = 0; data->env[i]; i++)
 	{
-		return (-1);
-	}
-	for (i = 0; env[i] != NULL; i++)
-	{
-		env_var = _strdup(env[i]);
-		env_name = strtok(env_var, "=");
-		if (_strcmp(env_name, name) != 0)
+		var_env = _strdup(data->env[i]);
+		name_env = strtok(var_env, "=");
+		if (_strcmp(name_env, data->args[1]) == 0)
 		{
-			env_new[j] = env[i];
+			l = i;
+		}
+		free(var_env);
+	}
+	if (k == -1)
+	{
+		get_err(data, -1);
+		return (1);
+	}
+	new_env = malloc(sizeof(char *) * (i));
+	for (i = j = 0; data->env[i]; i++)
+	{
+		if (i != l)
+		{
+			new_env[j] = data->env[i];
 			j++;
 		}
-		else
-			free(env[i]);
-		free(env_var);
 	}
-	env_new[count_env] = NULL;
-	free(env);
-	data->env = env_new;
+	new_env[j] = NULL;
+	free(data->env);
+	data->env = new_env;
+	free(data->env[l]);
 	return (1);
 }
