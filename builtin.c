@@ -103,7 +103,7 @@ int handle_env(sh_dt *data)
  */
 int handle_exit(sh_dt *data)
 {
-	unsigned int exit_status;
+	int exit_status;
 
 	if (data->args[1] != NULL)
 	{
