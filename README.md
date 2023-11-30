@@ -24,6 +24,9 @@ The Simple Shell project involves creating a UNIX command-line interpreter. It e
 The completion of this project, marks a significant milestone, showcasing the ability to create a fundamental UNIX command interpreter.
 
 **Authors:**
-Lionel Muhire(Me)
-Shimwa Uwase Sylvie
+-  Lionel Muhire(Me)
+-  Shimwa Uwase Sylvie
+  
+
+
 Thank you for having a look on this Simple Shell project! 🚀
